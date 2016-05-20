@@ -198,7 +198,10 @@ public class Mapa extends JPanel
             double x = sizeGrid + (sizeSpace);
             for (int j = 0; j < n; j++, x+= sizeSquare) 
             {
-                g.drawImage(getIcons(positionsMap[i][j]), (int)x,(int)y,(int) sizeImage,(int) sizeImage, null);
+                if (positionsMap[i][j] != 0)
+                {
+                    g.drawImage(getIcons(positionsMap[i][j]), (int)x,(int)y,(int) sizeImage,(int) sizeImage, null);
+                }
             }
         }
         int posYRobot =(int)( sizeGrid + sizeSpace +(sizeSquare *robot[0]));

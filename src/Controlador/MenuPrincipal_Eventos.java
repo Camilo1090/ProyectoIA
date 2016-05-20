@@ -23,6 +23,7 @@ public class MenuPrincipal_Eventos
     
     private File archivo;
     private String algoritmo;
+    private int heuristica;
     
     public MenuPrincipal_Eventos(final MenuPrincipal menuPrincipal)
     {
@@ -45,7 +46,7 @@ public class MenuPrincipal_Eventos
         this.menuPrincipal.cbAlgoritmos.addActionListener(
             (ActionEvent ae) -> 
             {
-                
+                activarHeuristicas();
             }
         );
     }
@@ -66,6 +67,7 @@ public class MenuPrincipal_Eventos
     public void empezar()
     {
         this.algoritmo = this.menuPrincipal.cbAlgoritmos.getSelectedItem().toString();
+        this.heuristica = Integer.parseInt(this.menuPrincipal.cbHeuristica.getSelectedItem().toString());
         
         if (this.archivo == null)
         {
@@ -82,13 +84,25 @@ public class MenuPrincipal_Eventos
                 tablero.setLocationRelativeTo(null);
                 tablero.setMovimiento(0);
                 this.menuPrincipal.setVisible(false);
-                Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);
+                //Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);
                 tablero.setVisible(true);
             }
             else
             {
                 
             }
+        }
+    }
+    
+    public void activarHeuristicas()
+    {
+        if (this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("A*") || this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("Avara"))
+        {
+            this.menuPrincipal.cbHeuristica.setEnabled(true);
+        }
+        else
+        {
+            this.menuPrincipal.cbHeuristica.setEnabled(false);
         }
     }
 }
