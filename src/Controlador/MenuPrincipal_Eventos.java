@@ -41,6 +41,13 @@ public class MenuPrincipal_Eventos
                 empezar();
             }
         );
+        
+        this.menuPrincipal.cbAlgoritmos.addActionListener(
+            (ActionEvent ae) -> 
+            {
+                
+            }
+        );
     }
     
     public void cargarArchivo()
@@ -67,6 +74,21 @@ public class MenuPrincipal_Eventos
         else
         {
             // mapa
+            Tablero tablero = new Tablero(this.algoritmo);
+            tablero.getMapa().loadMap(archivo);
+            
+            if (tablero.getMapa().isLoadMap())
+            {
+                tablero.setLocationRelativeTo(null);
+                tablero.setMovimiento(0);
+                this.menuPrincipal.setVisible(false);
+                Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);
+                tablero.setVisible(true);
+            }
+            else
+            {
+                
+            }
         }
     }
 }
