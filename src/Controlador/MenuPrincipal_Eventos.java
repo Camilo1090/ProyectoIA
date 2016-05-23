@@ -83,8 +83,7 @@ public class MenuPrincipal_Eventos
             {
                 tablero.setLocationRelativeTo(null);
                 tablero.setMovimiento(0);
-                this.menuPrincipal.setVisible(false);
-                //Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);
+                Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);
                 tablero.setVisible(true);
             }
             else

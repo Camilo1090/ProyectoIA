@@ -29,6 +29,11 @@ public class Mapa extends JPanel
     private int positionsMap[][];
     //Arreglo con la posicion actual del robot
     private int robot[];
+    
+    private int initPos[];
+    private int posGoal1[];
+    private int posGoal2[];
+    private int posGoal3[];
 
     //Verifica si se ha cargado el mapa
     private boolean loadMap;
@@ -48,6 +53,10 @@ public class Mapa extends JPanel
         loadImages(); //Se cargan las
         loadMap = false;
         robot = new int[2];
+        initPos = new int[2];
+        posGoal1 = new int[2];
+        posGoal2 = new int[2];
+        posGoal3 = new int[2];
     }
 
     //Metodo encargado de cargar las imagenes de la carpeta de imagenes
@@ -106,7 +115,30 @@ public class Mapa extends JPanel
                         if ( 0 <= number && number <= 8)
                         {
                             positionsMap[i][j] = number;
-                        }else 
+                            
+                            switch (number) 
+                            {
+                                case 0:
+                                    initPos = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                case 7:
+                                    posGoal1 = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                case 6:
+                                    posGoal2 = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                case 5:
+                                    posGoal3 = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else 
                         {
                             correct = false;
                         }
@@ -262,4 +294,36 @@ public class Mapa extends JPanel
     public void setRobot(int[] robot) {
         this.robot = robot;
     }
+
+    public int[] getInitPos() {
+        return initPos;
+    }
+
+    public void setInitPos(int[] initPos) {
+        this.initPos = initPos;
+    }
+
+    public int[] getPosGoal1() {
+        return posGoal1;
+    }
+
+    public void setPosGoal1(int[] posGoal1) {
+        this.posGoal1 = posGoal1;
+    }
+
+    public int[] getPosGoal2() {
+        return posGoal2;
+    }
+
+    public void setPosGoal2(int[] posGoal2) {
+        this.posGoal2 = posGoal2;
+    }
+
+    public int[] getPosGoal3() {
+        return posGoal3;
+    }
+
+    public void setPosGoal3(int[] posGoal3) {
+        this.posGoal3 = posGoal3;
+    }    
 }
