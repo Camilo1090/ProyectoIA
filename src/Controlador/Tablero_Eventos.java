@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.CostoUniforme;
+import Modelo.PreferenteAmplitud;
 import Vista.Tablero;
 import java.awt.event.ActionEvent;
 
@@ -58,7 +59,7 @@ public class Tablero_Eventos
     }
     
     //Metodo encargado de cargar el mapa dependiendo de que busqueda se a seleccionado
-    public void realizarBusqueda()
+    public final void realizarBusqueda()
     {
 //        if (this.algoritmo.equals("A*") && this.heuristica == 1)
 //        {
@@ -132,14 +133,58 @@ public class Tablero_Eventos
                     tablero.getMapa().getInitPos()[0],
                     tablero.getMapa().getInitPos()[1]
             );
+            
+            long t = System.currentTimeMillis();
             cu1.busqueda();
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
             //Se carga el camino en la vista para que el robot lo recorra
             tablero.cargarCamino(cu1.getNodoMeta().getCamino());
-            solucion += "Numero de Nodos Expandidos: " + cu1.getNodosExpandidos() + "\n";
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : cu1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + cu1.getNodosExpandidos() + "\n";
             solucion += "Numero de Nodos Creados: " + cu1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + cu1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + cu1.getFactorRamificacion() + "\n";
             solucion += "Profundidad del Arbol: " + cu1.getProfundidad() + "\n";
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
+        else if (this.algoritmo.equals("Preferente por Amplitud"))
+        {
+            PreferenteAmplitud pa1 = new PreferenteAmplitud(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1]
+            );
+            
+            long t = System.currentTimeMillis();
+            pa1.busqueda();
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(pa1.getNodoMeta().getCamino());
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : pa1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + pa1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + pa1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + pa1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + pa1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + pa1.getProfundidad() + "\n";
             
             this.tablero.taSolucion.setText(solucion);
         }

@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  *
@@ -26,6 +27,7 @@ public class Busqueda
     protected int endY;
     
     protected PriorityQueue<Nodo> priorityQueue;
+    protected Queue<Nodo> cola;
 
     public Busqueda() 
     {
@@ -35,7 +37,7 @@ public class Busqueda
         nodosExpandidos = 0;
         profundidad = 0;
         factorRamificacion = 0;
-        nodoMeta = new Nodo(iniX, iniY, null, 0);
+        nodoMeta = new Nodo(iniX, iniY, null, 0, true);
     }
 
     //Metodo encargado de retornar true si la posicion es valida
@@ -48,7 +50,7 @@ public class Busqueda
             if (matriz[posX][posY] == 1)
             {
                 valido = false;
-            }            
+            }
         }
         catch (ArrayIndexOutOfBoundsException e)
         {

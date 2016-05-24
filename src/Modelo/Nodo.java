@@ -22,11 +22,13 @@ public class Nodo
     private ArrayList<int[]> camino;
     public ArrayList<int[]> tortugas;
     public int turnosBonus;
+    public int[] anterior;
+    public boolean evitar;
     private double heuristica;
     private double fn;
 
     //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
-    public Nodo(int x, int y, Nodo padre, double costo)
+    public Nodo(int x, int y, Nodo padre, double costo, boolean evitar)
     {
         //Se inicializan las variables
         this.x = x;
@@ -34,6 +36,7 @@ public class Nodo
         this.costo = costo;
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
+        this.evitar = evitar;
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
@@ -45,6 +48,7 @@ public class Nodo
             meta3 = padre.meta3;
             turnosBonus = padre.turnosBonus - 1;
             tortugas.addAll(padre.tortugas);
+            anterior = new int[]{padre.getX(), padre.getY()};
         }
         else 
         {
@@ -53,11 +57,12 @@ public class Nodo
             meta2 = false;
             meta3 = false;
             turnosBonus = 0;
+            anterior = new int[2];
         }
     }
     
     //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
-    public Nodo(int x, int y, Nodo padre, double costo, int[] tortuga)
+    public Nodo(int x, int y, Nodo padre, double costo, int[] tortuga, boolean evitar)
     {
         //Se inicializan las variables
         this.x = x;
@@ -66,6 +71,7 @@ public class Nodo
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
         turnosBonus = 3;
+        this.evitar = evitar;
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
@@ -77,6 +83,7 @@ public class Nodo
             meta3 = padre.meta3;
             tortugas.addAll(padre.tortugas);
             tortugas.add(tortuga);
+            anterior = new int[]{padre.getX(), padre.getY()};
         }
         else 
         {
@@ -85,6 +92,7 @@ public class Nodo
             meta2 = false;
             meta3 = false;            
             tortugas.add(tortuga);
+            anterior = new int[2];
         }
     }
 

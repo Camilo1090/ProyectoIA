@@ -6,24 +6,22 @@
 package Modelo;
 
 import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  *
  * @author camilo
  */
-public class CostoUniforme extends Busqueda
+public class PreferenteAmplitud extends Busqueda
 {
-    public CostoUniforme(int matriz[][], int iniX, int iniY)
+    public PreferenteAmplitud(int matriz[][], int iniX, int iniY)
     {
         this.matriz = matriz;
         this.iniX = iniX;
         this.iniY = iniY;
-        //Se inicializa la cola de prioridad con el formato de ordenamiento
-        PQsort pqs = new PQsort();
-        priorityQueue = new PriorityQueue<>(pqs);
+        
         //Se añade el primer nodo a la cola de prioridad que en este casi seria el inicio
-        priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true));
+        cola.offer(new Nodo(iniX, iniY, null, 0, true));
     }
 
     /*Metodo encargado de realizar la busqueda, esta comienza y no para hasta que
@@ -34,9 +32,9 @@ public class CostoUniforme extends Busqueda
         boolean fin = false; //Variable que comprueba si a terminado
         int c = 0;
         
-        while (!fin && priorityQueue.size() > 0)
+        while (!fin && cola.size() > 0)
         {
-            Nodo nodo = priorityQueue.poll(); //Saca y remueve el nodo que se va a expandir
+            Nodo nodo = cola.poll(); //Saca y remueve el nodo que se va a expandir
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
 
@@ -141,34 +139,14 @@ public class CostoUniforme extends Busqueda
             //Se añade el nuevo nodo a la cola de prioridad
             if (bonus)
             {
-                priorityQueue.offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true));
+                cola.offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true));
             }
             else
             {
-                priorityQueue.offer(new Nodo(x, y, nodo, costo, true));
+                cola.offer(new Nodo(x, y, nodo, costo, true));
             }
             
             nodosCreados++;
-        }
-    }
-
-    //Subclase encargada de ordenar la cola de prioridad de acuerdo al costo
-    static class PQsort implements Comparator<Nodo> 
-    {
-        /*Este metodo es el encargado de darle la instruccion a la cola de prioridad que se ordene
-        * de cierta manera, ya sea que se ordene con respecto a el costo o a una typeHeuristic en especifico
-        *
-        * la manera en la que esta funciona es simple,
-        * Si el primer valor a comparar es menor que el segundo entonces retorna un numero negativo.
-        * Si ambos numeros tienen el mismo valor entonces retorna cero.
-        * Si el primer valor es mayor que el segundo entonces retornara un numero positivo
-        *
-        * Si quisiesemos ordenar de forma acendente lo normal seria que el primer valor restado con el segundo
-        * diese un numero negativo*/
-        @Override
-        public int compare(Nodo a, Nodo b) 
-        {
-            return (int) (a.getCosto() - b.getCosto());
         }
     }
 }

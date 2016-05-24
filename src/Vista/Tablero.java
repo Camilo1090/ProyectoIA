@@ -35,7 +35,7 @@ public class Tablero extends javax.swing.JFrame
     public void cargarCamino(ArrayList<int[]> camino)
     {
         this.camino = camino;
-        mapa.setRobot(this.camino.get(0));
+        mapa.setRobot(this.camino.get(0), this.camino.get(0), true);
         mapa.repaint();
         System.out.println("camino cargado");
     }
@@ -43,10 +43,13 @@ public class Tablero extends javax.swing.JFrame
     public void siguiente()
     {
         movimiento++;
-        if (movimiento< camino.size()){
-            mapa.setRobot(camino.get(movimiento));
+        if (movimiento < camino.size())
+        {
+            mapa.setRobot(camino.get(movimiento), camino.get(movimiento - 1), true);
             mapa.repaint();
-        }else {
+        }
+        else 
+        {
             movimiento--;
         }
     }
@@ -54,10 +57,13 @@ public class Tablero extends javax.swing.JFrame
     public void anterior()
     {
         movimiento--;
-        if (movimiento >= 0){
-            mapa.setRobot(camino.get(movimiento));
+        if (movimiento >= 0)
+        {
+            mapa.setRobot(camino.get(movimiento), camino.get(movimiento + 1), false);
             mapa.repaint();
-        }else {
+        }
+        else 
+        {
             movimiento++;
         }
     }
@@ -65,7 +71,8 @@ public class Tablero extends javax.swing.JFrame
     public void reiniciar()
     {
         movimiento = 0;
-        mapa.setRobot(camino.get(movimiento));
+        mapa.setRobot(camino.get(movimiento), camino.get(movimiento), true);
+        mapa.rebootMatrix();
         mapa.repaint();
     }
 

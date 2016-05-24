@@ -26,14 +26,15 @@ public class Mapa extends JPanel
     private Image imgRock;
 
     //Matriz que contiene los valores del mapa
-    private int positionsMap[][];
+    private int[][] positionsMap;
+    private int[][] matrizOriginal;
     //Arreglo con la posicion actual del robot
     private int robot[];
+    private boolean meta1;
+    private boolean meta2;
+    private boolean meta3;
     
     private int initPos[];
-    private int posGoal1[];
-    private int posGoal2[];
-    private int posGoal3[];
 
     //Verifica si se ha cargado el mapa
     private boolean loadMap;
@@ -54,13 +55,13 @@ public class Mapa extends JPanel
         loadMap = false;
         robot = new int[2];
         initPos = new int[2];
-        posGoal1 = new int[2];
-        posGoal2 = new int[2];
-        posGoal3 = new int[2];
+        meta1 = false;
+        meta2 = false;
+        meta3 = false;
     }
 
     //Metodo encargado de cargar las imagenes de la carpeta de imagenes
-    public void loadImages()
+    public final void loadImages()
     {
         try
         {
@@ -103,6 +104,7 @@ public class Mapa extends JPanel
                 {
                     int i = Integer.parseInt(buffer);
                     positionsMap = new int[i][i];
+                    matrizOriginal = new int[i][i];
                 }
                 //Ciclo para almacenar los datos del texto en el arreglo del mapa positionsMap
                 for (int i = 0; (buffer=lee.readLine())!=null && correct; i++) 
@@ -120,18 +122,6 @@ public class Mapa extends JPanel
                             {
                                 case 0:
                                     initPos = new int[]{i, j};
-                                    //System.out.println(i + " - " + j);
-                                    break;
-                                case 7:
-                                    posGoal1 = new int[]{i, j};
-                                    //System.out.println(i + " - " + j);
-                                    break;
-                                case 6:
-                                    posGoal2 = new int[]{i, j};
-                                    //System.out.println(i + " - " + j);
-                                    break;
-                                case 5:
-                                    posGoal3 = new int[]{i, j};
                                     //System.out.println(i + " - " + j);
                                     break;
                                 default:
@@ -168,6 +158,11 @@ public class Mapa extends JPanel
             catch (NumberFormatException e)
             {
                 System.err.println("Error al cargar el mapa formato de numeros no correcto");
+            }
+            
+            for (int i = 0; i < positionsMap.length; i++) 
+            {
+                System.arraycopy(positionsMap[i], 0, matrizOriginal[i], 0, positionsMap[i].length);
             }
         }
     }
@@ -277,6 +272,14 @@ public class Mapa extends JPanel
         }
         return icon;
     }
+    
+    public void rebootMatrix()
+    {
+        for (int i = 0; i < positionsMap.length; i++) 
+        {
+            System.arraycopy(matrizOriginal[i], 0, positionsMap[i], 0, matrizOriginal[i].length);
+        }
+    }
 
     //Metodo encargado de retornar loadMap el cual esta en true si el mapa a sido cargado exitosamente
     public boolean isLoadMap() {
@@ -291,8 +294,37 @@ public class Mapa extends JPanel
         return positionsMap;
     }
 
-    public void setRobot(int[] robot) {
+    public void setRobot(int[] robot, int[] anterior, boolean sentido) 
+    {
         this.robot = robot;
+        int n = positionsMap[anterior[0]][anterior[1]];
+        
+        if (sentido)
+        {
+            if (n == 4)
+            {
+                positionsMap[anterior[0]][anterior[1]] = 2;
+            }
+            else if (n == 7 && !meta1)
+            {
+                positionsMap[anterior[0]][anterior[1]] = 2;
+                meta1 = true;
+            }
+            else if (n == 6 && meta1 && !meta2)
+            {
+                positionsMap[anterior[0]][anterior[1]] = 2;
+                meta2 = true;
+            }
+            else if (n == 5 && meta1 && meta2 && !meta3)
+            {
+                positionsMap[anterior[0]][anterior[1]] = 2;
+                meta3 = true;
+            }
+        }
+        else if (!sentido)
+        {
+            positionsMap[anterior[0]][anterior[1]] = matrizOriginal[anterior[0]][anterior[1]];
+        }
     }
 
     public int[] getInitPos() {
@@ -301,29 +333,5 @@ public class Mapa extends JPanel
 
     public void setInitPos(int[] initPos) {
         this.initPos = initPos;
-    }
-
-    public int[] getPosGoal1() {
-        return posGoal1;
-    }
-
-    public void setPosGoal1(int[] posGoal1) {
-        this.posGoal1 = posGoal1;
-    }
-
-    public int[] getPosGoal2() {
-        return posGoal2;
-    }
-
-    public void setPosGoal2(int[] posGoal2) {
-        this.posGoal2 = posGoal2;
-    }
-
-    public int[] getPosGoal3() {
-        return posGoal3;
-    }
-
-    public void setPosGoal3(int[] posGoal3) {
-        this.posGoal3 = posGoal3;
-    }    
+    }  
 }
