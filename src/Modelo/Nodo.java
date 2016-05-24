@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Nodo 
 {
-    public int[][] matriz;
     public boolean meta1;
     public boolean meta2;
     public boolean meta3;
@@ -21,20 +20,20 @@ public class Nodo
     private int y;
     private double costo;
     private ArrayList<int[]> camino;
-    private boolean bonus;
+    public ArrayList<int[]> tortugas;
+    public int turnosBonus;
     private double heuristica;
     private double fn;
 
     //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
-    public Nodo(int[][] matriz, int x, int y, Nodo padre, double costo, boolean bonus)
+    public Nodo(int x, int y, Nodo padre, double costo)
     {
         //Se inicializan las variables
-        this.matriz = matriz;
         this.x = x;
         this.y = y;
         this.costo = costo;
-        this.bonus = bonus;
         camino = new ArrayList<>();
+        tortugas = new ArrayList<>();
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
@@ -44,6 +43,8 @@ public class Nodo
             meta1 = padre.meta1;
             meta2 = padre.meta2;
             meta3 = padre.meta3;
+            turnosBonus = padre.turnosBonus - 1;
+            tortugas.addAll(padre.tortugas);
         }
         else 
         {
@@ -51,18 +52,49 @@ public class Nodo
             meta1 = false;
             meta2 = false;
             meta3 = false;
+            turnosBonus = 0;
+        }
+    }
+    
+    //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
+    public Nodo(int x, int y, Nodo padre, double costo, int[] tortuga)
+    {
+        //Se inicializan las variables
+        this.x = x;
+        this.y = y;
+        this.costo = costo;
+        camino = new ArrayList<>();
+        tortugas = new ArrayList<>();
+        turnosBonus = 3;
+        /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
+        * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
+        if (padre != null)
+        {
+            camino.addAll(padre.getCamino());
+            camino.add(new int[]{x,y});
+            meta1 = padre.meta1;
+            meta2 = padre.meta2;
+            meta3 = padre.meta3;
+            tortugas.addAll(padre.tortugas);
+            tortugas.add(tortuga);
+        }
+        else 
+        {
+            camino.add(new int[]{x,y});
+            meta1 = false;
+            meta2 = false;
+            meta3 = false;            
+            tortugas.add(tortuga);
         }
     }
 
     //Este contructor es usado para la busqueda por A* pues se tiene en cuenta la heuristica
-    public Nodo(int[][] matriz, int x, int y, Nodo padre, double costo, boolean bonus, int heuristica)
+    public Nodo(int x, int y, Nodo padre, double costo, boolean bonus, int heuristica)
     {
         //Se inicializan las variables
-        this.matriz = matriz;
         this.x = x;
         this.y = y;
         this.costo = costo;
-        this.bonus = bonus;
         this.heuristica = heuristica;
         this.fn = this.costo + this.heuristica;
         camino = new ArrayList<>();
@@ -72,10 +104,23 @@ public class Nodo
         {
             camino.addAll(padre.getCamino());
             camino.add(new int[]{x, y});
+            meta1 = padre.meta1;
+            meta2 = padre.meta2;
+            meta3 = padre.meta3;
+            turnosBonus = padre.turnosBonus - 1;
         }
         else 
         {
             camino.add(new int[]{x, y});
+            meta1 = false;
+            meta2 = false;
+            meta3 = false;     
+            turnosBonus = 0;
+        }
+        
+        if (bonus)
+        {
+            turnosBonus = 4;
         }
     }
 
@@ -112,11 +157,7 @@ public class Nodo
     }
 
     public boolean isBonus() {
-        return bonus;
-    }
-
-    public void setBonus(boolean isBonus) {
-        this.bonus = isBonus;
+        return turnosBonus > 0;
     }
 
     public double getHeuristica() {

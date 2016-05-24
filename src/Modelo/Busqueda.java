@@ -35,7 +35,7 @@ public class Busqueda
         nodosExpandidos = 0;
         profundidad = 0;
         factorRamificacion = 0;
-        nodoMeta = new Nodo(matriz, iniX, iniY, null, 0, false);
+        nodoMeta = new Nodo(iniX, iniY, null, 0);
     }
 
     //Metodo encargado de retornar true si la posicion es valida
@@ -65,7 +65,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (nodo.matriz[nodo.getX()][nodo.getY()] == 7)
+            if (matriz[nodo.getX()][nodo.getY()] == 7)
             {
                 isGoal = true;
             }
@@ -81,7 +81,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (nodo.matriz[nodo.getX()][nodo.getY()] == 6)
+            if (matriz[nodo.getX()][nodo.getY()] == 6)
             {
                 isGoal = true;
             }
@@ -97,7 +97,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (nodo.matriz[nodo.getX()][nodo.getY()] == 5)
+            if (matriz[nodo.getX()][nodo.getY()] == 5)
             {
                 isGoal = true;
             }
@@ -112,7 +112,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (nodo.matriz[nodo.getX()][nodo.getY()] == 4)
+            if (matriz[nodo.getX()][nodo.getY()] == 4)
             {
                 isTurtle = true;
             }
@@ -127,7 +127,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (nodo.matriz[nodo.getX()][nodo.getY()] == 8)
+            if (matriz[nodo.getX()][nodo.getY()] == 8)
             {
                 isAquaman = true;
             }
@@ -158,12 +158,15 @@ public class Busqueda
     }
 
     //Metodo ecargado de calcular los costos en una posicion dada
-    public double calcularCosto(int posX, int posY, double costo, boolean isBonus)
+    public double calcularCosto(int posX, int posY, Nodo nodo, double costo, boolean isBonus)
     {
         double c = 0;
         
         switch (matriz[posX][posY])
         {
+            case 0:
+                c = 1;
+                break;
             // Espacio libre
             case 2:
                 c = 1;

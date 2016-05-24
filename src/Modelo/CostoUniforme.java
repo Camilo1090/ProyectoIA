@@ -23,7 +23,7 @@ public class CostoUniforme extends Busqueda
         PQsort pqs = new PQsort();
         priorityQueue = new PriorityQueue<>(pqs);
         //Se añade el primer nodo a la cola de prioridad que en este casi seria el inicio
-        priorityQueue.offer(new Nodo(matriz, iniX, iniY, null, 0, false));
+        priorityQueue.offer(new Nodo(iniX, iniY, null, 0));
     }
 
     /*Metodo encargado de realizar la busqueda, esta comienza y no para hasta que
@@ -40,26 +40,27 @@ public class CostoUniforme extends Busqueda
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
 
-            if (isGoal1(nodo) && !nodo.meta1)
+            if (isGoal1(nodo) && nodo.meta1)
             {
-                //nodoMeta = nodo;
-                //fin = true;
+                nodoMeta = nodo;
+                fin = true;
                 nodo.meta1 = true;
                 System.out.println("-----------------------------------------META1");
             }
             else if (isGoal2(nodo) && nodo.meta1 && !nodo.meta2)
             {
-                //nodoMeta = nodo;
-                //fin = true;
+                nodoMeta = nodo;
+                fin = true;
                 nodo.meta2 = true;
                 System.out.println("-----------------------------------------META2");
             }
-            else if (isGoal3(nodo) && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+            else if (isGoal3(nodo) && !nodo.meta1 && !nodo.meta2 && !nodo.meta3)
             {
                 nodoMeta = nodo;
                 nodo.meta3 = true;
                 fin = true;
                 System.out.println("-----------------------------------------META3");
+                System.out.println("-----------------------------------------" + nodo.tortugas.size());
             }
             
             if (!isAquaman(nodo) && !fin) // //Se comprueba que el robot esta cargado para poder seguir expandiendo
@@ -69,9 +70,10 @@ public class CostoUniforme extends Busqueda
                 expandir(nodo, 3);
                 expandir(nodo, 4);
                 nodosExpandidos++;
-                System.out.println(c);
-                c++;
-            }           
+            }
+            
+            System.out.println(c);
+            c++;    
         }
         //Se caulcula cual es el factor de ramificacion una vez a encontrado la meta
         factorRamificacion = calcularFactorRamificacion(profundidad, nodosCreados);  
@@ -112,25 +114,31 @@ public class CostoUniforme extends Busqueda
         }
         /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
         dirige es un acceso valido y que no lo halla recorrido antes*/
-        if (posicionValida(x,y))
-        {
-            double costo = calcularCosto(x, y, nodo.getCosto(), nodo.isBonus());
+        if (posicionValida(x, y))
+        {            
             boolean bonus = isTurtle(nodo);
             
-            int[][] newMatrix = new int[matriz.length][matriz.length];
-            
-            for (int i = 0; i < matriz.length; i++) 
+            for (int[] tortuga : nodo.tortugas) 
             {
-                System.arraycopy(matriz[i], 0, newMatrix[i], 0, matriz[i].length);
+                if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
+                {
+                    bonus = false;
+                    break;
+                }
             }
             
-            if (bonus)
-            {
-                newMatrix[nodo.getX()][nodo.getY()] = 2;
-            }
+            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() | bonus));
             
             //Se añade el nuevo nodo a la cola de prioridad
-            priorityQueue.offer(new Nodo(newMatrix, x, y, nodo, costo, bonus));
+            if (bonus)
+            {
+                priorityQueue.offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}));
+            }
+            else
+            {
+                priorityQueue.offer(new Nodo(x, y, nodo, costo));
+            }
+            
             nodosCreados++;
         }
     }
