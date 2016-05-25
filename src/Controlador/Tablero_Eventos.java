@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import Modelo.Asterisco;
+import Modelo.Avara;
 import Modelo.CostoUniforme;
 import Modelo.PreferenteAmplitud;
 import Modelo.PreferenteProfundidad;
@@ -62,72 +64,151 @@ public class Tablero_Eventos
     //Metodo encargado de cargar el mapa dependiendo de que busqueda se a seleccionado
     public void realizarBusqueda()
     {
-//        if (this.algoritmo.equals("A*") && this.heuristica == 1)
-//        {
-//            BusquedaAsterisco busquedaAsterisco = new BusquedaAsterisco(
-//                    tablero.getMapa().getPositionsMap(),
-//                    potitionInitial[0],
-//                    potitionInitial[1],
-//                    potitionEnd[0],
-//                    potitionEnd[1],
-//                    1 //Indica que es la heuristica 1
-//            );
-//            busquedaAsterisco.busqueda(); //Se realiza la busqueda
-//            //Se carga el camino en la vista para que el robot lo recorra
-//            tablero.cargarCamino(busquedaAsterisco.getNodoMeta().getPath());
-//        }
-//        else if (this.algoritmo.equals("A*") && this.heuristica == 2)
-//        {
-//            //Se busca el inicio y el fin de la buqueda
-//            int potitionInitial[] = new Aux().findPosStart(tablero.getMapa().getPositionsMap());
-//            int potitionEnd[] = new Aux().findPosEnd(tablero.getMapa().getPositionsMap());
-//            BusquedaAsterisco busquedaAsterisco = new BusquedaAsterisco(
-//                    tablero.getMapa().getPositionsMap(),
-//                    potitionInitial[0],
-//                    potitionInitial[1],
-//                    potitionEnd[0],
-//                    potitionEnd[1],
-//                    2 //Indica que es la heuristica 2
-//            );
-//            busquedaAsterisco.busqueda(); //Se realiza la busqueda
-//            //Se carga el camino en la vista para que el robot lo recorra
-//            tablero.loadPath(busquedaAsterisco.getNodoMeta().getPath());
-//        }
-//        else if (this.algoritmo.equals("Avara") && this.heuristica == 1)
-//        {
-//            //Se busca el inicio y el fin de la buqueda
-//            int potitionInitial[] = new Aux().findPosStart(tablero.getMapa().getPositionsMap());
-//            int potitionEnd[] = new Aux().findPosEnd(tablero.getMapa().getPositionsMap());
-//            BusquedaAsterisco busquedaAsterisco = new BusquedaAsterisco(
-//                    tablero.getMapa().getPositionsMap(),
-//                    potitionInitial[0],
-//                    potitionInitial[1],
-//                    potitionEnd[0],
-//                    potitionEnd[1],
-//                    1 //Indica que es la heuristica 1
-//            );
-//            busquedaAsterisco.busqueda(); //Se realiza la busqueda
-//            //Se carga el camino en la vista para que el robot lo recorra
-//            tablero.loadPath(busquedaAsterisco.getNodoMeta().getPath());
-//        }
-//        else if (this.algoritmo.equals("Avara") && this.heuristica == 2)
-//        {
-//            //Se busca el inicio y el fin de la buqueda
-//            int potitionInitial[] = new Aux().findPosStart(tablero.getMapa().getPositionsMap());
-//            int potitionEnd[] = new Aux().findPosEnd(tablero.getMapa().getPositionsMap());
-//            BusquedaAsterisco busquedaAsterisco = new BusquedaAsterisco(
-//                    tablero.getMapa().getPositionsMap(),
-//                    potitionInitial[0],
-//                    potitionInitial[1],
-//                    potitionEnd[0],
-//                    potitionEnd[1],
-//                    2 //Indica que es la heuristica 2
-//            );
-//            busquedaAsterisco.busqueda(); //Se realiza la busqueda
-//            //Se carga el camino en la vista para que el robot lo recorra
-//            tablero.loadPath(busquedaAsterisco.getNodoMeta().getPath());
-//        }
-        if (this.algoritmo.equals("Costo Uniforme"))
+        System.out.println(this.algoritmo + " " + this.heuristica);
+        if (this.algoritmo.equals("A*") && this.heuristica == 1)
+        {
+            Asterisco ba1 = new Asterisco(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1],
+                    tablero.getMapa().getPosMeta1(),
+                    tablero.getMapa().getPosMeta2(),
+                    tablero.getMapa().getPosMeta3(),
+                    1 //Indica que es la heuristica 1
+            );
+            
+            long t = System.currentTimeMillis();
+            ba1.busqueda(); //Se realiza la busqueda
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(ba1.getNodoMeta().getCamino());
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : ba1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + ba1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
+        else if (this.algoritmo.equals("A*") && this.heuristica == 2)
+        {
+            //Se busca el inicio y el fin de la buqueda
+            Asterisco ba1 = new Asterisco(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1],
+                    tablero.getMapa().getPosMeta1(),
+                    tablero.getMapa().getPosMeta2(),
+                    tablero.getMapa().getPosMeta3(),
+                    2 //Indica que es la heuristica 2
+            );
+            
+            long t = System.currentTimeMillis();
+            ba1.busqueda(); //Se realiza la busqueda
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(ba1.getNodoMeta().getCamino());
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : ba1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + ba1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
+        else if (this.algoritmo.equals("Avara") && this.heuristica == 1)
+        {
+            //Se busca el inicio y el fin de la buqueda
+            Avara ba1 = new Avara(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1],
+                    tablero.getMapa().getPosMeta1(),
+                    tablero.getMapa().getPosMeta2(),
+                    tablero.getMapa().getPosMeta3(),
+                    1 //Indica que es la heuristica 1
+            );
+            
+            long t = System.currentTimeMillis();
+            ba1.busqueda(); //Se realiza la busqueda
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(ba1.getNodoMeta().getCamino());
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : ba1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + ba1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
+        else if (this.algoritmo.equals("Avara") && this.heuristica == 2)
+        {
+            //Se busca el inicio y el fin de la buqueda
+            Avara ba1 = new Avara(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1],
+                    tablero.getMapa().getPosMeta1(),
+                    tablero.getMapa().getPosMeta2(),
+                    tablero.getMapa().getPosMeta3(),
+                    2 //Indica que es la heuristica 2
+            );
+            
+            long t = System.currentTimeMillis();
+            ba1.busqueda(); //Se realiza la busqueda
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(ba1.getNodoMeta().getCamino());
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : ba1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + ba1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
+        else if (this.algoritmo.equals("Costo Uniforme"))
         {
             CostoUniforme cu1 = new CostoUniforme(
                     tablero.getMapa().getPositionsMap(),

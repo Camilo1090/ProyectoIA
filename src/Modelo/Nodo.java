@@ -87,6 +87,8 @@ public class Nodo
             meta1 = padre.meta1;
             meta2 = padre.meta2;
             meta3 = padre.meta3;
+            posMeta1 = padre.posMeta1;
+            posMeta2 = padre.posMeta2;
             tortugas.addAll(padre.tortugas);
             tortugas.add(tortuga);
             anterior = new int[]{padre.getX(), padre.getY()};
@@ -96,14 +98,16 @@ public class Nodo
             camino.add(new int[]{x,y});
             meta1 = false;
             meta2 = false;
-            meta3 = false;            
+            meta3 = false;  
+            posMeta1 = 0;
+            posMeta2 = 0;          
             tortugas.add(tortuga);
             anterior = new int[2];
         }
     }
-
+    
     //Este contructor es usado para la busqueda por A* pues se tiene en cuenta la heuristica
-    public Nodo(int x, int y, Nodo padre, double costo, boolean bonus, int heuristica)
+    public Nodo(int x, int y, Nodo padre, double costo, boolean evitar, double heuristica)
     {
         //Se inicializan las variables
         this.x = x;
@@ -112,6 +116,7 @@ public class Nodo
         this.heuristica = heuristica;
         this.fn = this.costo + this.heuristica;
         camino = new ArrayList<>();
+        tortugas = new ArrayList<>();
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
@@ -121,20 +126,61 @@ public class Nodo
             meta1 = padre.meta1;
             meta2 = padre.meta2;
             meta3 = padre.meta3;
+            posMeta1 = padre.posMeta1;
+            posMeta2 = padre.posMeta2;
             turnosBonus = padre.turnosBonus - 1;
+            tortugas.addAll(padre.tortugas);
+            anterior = new int[]{padre.getX(), padre.getY()};
         }
         else 
         {
             camino.add(new int[]{x, y});
             meta1 = false;
             meta2 = false;
-            meta3 = false;     
+            meta3 = false;
+            posMeta1 = 0;
+            posMeta2 = 0;
             turnosBonus = 0;
+            anterior = new int[2];
         }
-        
-        if (bonus)
+    }
+
+    //Este contructor es usado para la busqueda por A* pues se tiene en cuenta la heuristica
+    public Nodo(int x, int y, Nodo padre, double costo, int[] tortuga, boolean evitar, double heuristica)
+    {
+        //Se inicializan las variables
+        this.x = x;
+        this.y = y;
+        this.costo = costo;
+        this.heuristica = heuristica;
+        this.fn = this.costo + this.heuristica;
+        camino = new ArrayList<>();
+        tortugas = new ArrayList<>();
+        turnosBonus = 3;
+        /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
+        * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
+        if (padre != null)
         {
-            turnosBonus = 4;
+            camino.addAll(padre.getCamino());
+            camino.add(new int[]{x, y});
+            meta1 = padre.meta1;
+            meta2 = padre.meta2;
+            meta3 = padre.meta3;
+            posMeta1 = padre.posMeta1;
+            posMeta2 = padre.posMeta2;
+            tortugas.addAll(padre.tortugas);
+            tortugas.add(tortuga);
+            anterior = new int[]{padre.getX(), padre.getY()};
+        }
+        else 
+        {
+            camino.add(new int[]{x, y});
+            meta1 = false;
+            meta2 = false;
+            meta3 = false;
+            posMeta1 = 0;
+            posMeta2 = 0;
+            anterior = new int[2];
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.Stack;
  */
 public class PreferenteProfundidad extends Busqueda
 {
+    private final Stack<Nodo> pila;
     private final int[] orden;
     
     public PreferenteProfundidad(int matriz[][], int iniX, int iniY, int[] orden)

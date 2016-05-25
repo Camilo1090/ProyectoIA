@@ -14,6 +14,8 @@ import java.util.LinkedList;
  */
 public class PreferenteAmplitud extends Busqueda
 {
+    private final LinkedList<Nodo> cola;
+    
     public PreferenteAmplitud(int matriz[][], int iniX, int iniY)
     {
         this.matriz = matriz;

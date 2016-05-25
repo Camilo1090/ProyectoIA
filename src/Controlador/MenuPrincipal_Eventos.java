@@ -93,6 +93,10 @@ public class MenuPrincipal_Eventos
                     //System.out.println(orden[0] + " " + orden[1] + " " + orden[2] + " " + orden[3]);
                     tableroEventos.setOrden(orden);
                 }
+                else if (this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("A*") || this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("Avara"))
+                {
+                    tableroEventos.setHeuristica(heuristica);
+                }
                 tableroEventos.realizarBusqueda();
                 tablero.setVisible(true);
             }

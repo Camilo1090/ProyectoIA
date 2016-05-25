@@ -29,12 +29,16 @@ public class Mapa extends JPanel
     private int[][] positionsMap;
     private int[][] matrizOriginal;
     //Arreglo con la posicion actual del robot
-    private int robot[];
+    private int[] robot;
+    
     private boolean meta1;
     private boolean meta2;
     private boolean meta3;
     
-    private int initPos[];
+    private int[] initPos;
+    private int[] posMeta1;
+    private int[] posMeta2;
+    private int[] posMeta3;
 
     //Verifica si se ha cargado el mapa
     private boolean loadMap;
@@ -58,6 +62,9 @@ public class Mapa extends JPanel
         meta1 = false;
         meta2 = false;
         meta3 = false;
+        posMeta1 = new int[2];
+        posMeta2 = new int[2];
+        posMeta3 = new int[2];
     }
 
     //Metodo encargado de cargar las imagenes de la carpeta de imagenes
@@ -122,6 +129,18 @@ public class Mapa extends JPanel
                             {
                                 case 0:
                                     initPos = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                case 7:
+                                    posMeta1 = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                case 6:
+                                    posMeta2 = new int[]{i, j};
+                                    //System.out.println(i + " - " + j);
+                                    break;
+                                case 5:
+                                    posMeta3 = new int[]{i, j};
                                     //System.out.println(i + " - " + j);
                                     break;
                                 default:
@@ -347,4 +366,28 @@ public class Mapa extends JPanel
     public void setInitPos(int[] initPos) {
         this.initPos = initPos;
     }  
+
+    public int[] getPosMeta1() {
+        return posMeta1;
+    }
+
+    public void setPosMeta1(int[] posMeta1) {
+        this.posMeta1 = posMeta1;
+    }
+
+    public int[] getPosMeta2() {
+        return posMeta2;
+    }
+
+    public void setPosMeta2(int[] posMeta2) {
+        this.posMeta2 = posMeta2;
+    }
+
+    public int[] getPosMeta3() {
+        return posMeta3;
+    }
+
+    public void setPosMeta3(int[] posMeta3) {
+        this.posMeta3 = posMeta3;
+    }
 }
