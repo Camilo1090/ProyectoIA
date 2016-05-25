@@ -297,34 +297,47 @@ public class Mapa extends JPanel
     public void setRobot(int[] robot, int[] anterior, boolean sentido) 
     {
         this.robot = robot;
-        int n = positionsMap[anterior[0]][anterior[1]];
-        
-        if (sentido)
-        {
-            if (n == 4)
-            {
-                positionsMap[anterior[0]][anterior[1]] = 2;
-            }
-            else if (n == 7 && !meta1)
-            {
-                positionsMap[anterior[0]][anterior[1]] = 2;
-                meta1 = true;
-            }
-            else if (n == 6 && meta1 && !meta2)
-            {
-                positionsMap[anterior[0]][anterior[1]] = 2;
-                meta2 = true;
-            }
-            else if (n == 5 && meta1 && meta2 && !meta3)
-            {
-                positionsMap[anterior[0]][anterior[1]] = 2;
-                meta3 = true;
-            }
-        }
-        else if (!sentido)
-        {
-            positionsMap[anterior[0]][anterior[1]] = matrizOriginal[anterior[0]][anterior[1]];
-        }
+//        int n = positionsMap[anterior[0]][anterior[1]];
+//        
+//        if (sentido)
+//        {
+//            if (n == 4)
+//            {
+//                positionsMap[anterior[0]][anterior[1]] = 2;
+//            }
+//            else if (n == 7 && !meta1)
+//            {
+//                positionsMap[anterior[0]][anterior[1]] = 2;
+//                meta1 = true;
+//            }
+//            else if (n == 6 && meta1 && !meta2)
+//            {
+//                positionsMap[anterior[0]][anterior[1]] = 2;
+//                meta2 = true;
+//            }
+//            else if (n == 5 && meta1 && meta2 && !meta3)
+//            {
+//                positionsMap[anterior[0]][anterior[1]] = 2;
+//                meta3 = true;
+//            }
+//        }
+//        else if (!sentido)
+//        {
+//            positionsMap[anterior[0]][anterior[1]] = matrizOriginal[anterior[0]][anterior[1]];
+//            
+//            if (n == 5 && meta1 && meta2 && meta3)
+//            {
+//                meta3 = false;
+//            }
+//            else if (n == 6 && meta1 && meta2)
+//            {
+//                meta2 = false;
+//            }
+//            else if (n == 7 && meta1)
+//            {
+//                meta1 = false;
+//            }
+//        }
     }
 
     public int[] getInitPos() {

@@ -5,8 +5,8 @@
  */
 package Modelo;
 
-import java.util.Comparator;
-import java.util.Queue;
+import java.util.LinkedList;
+
 
 /**
  *
@@ -20,6 +20,7 @@ public class PreferenteAmplitud extends Busqueda
         this.iniX = iniX;
         this.iniY = iniY;
         
+        cola = new LinkedList<>();
         //Se añade el primer nodo a la cola de prioridad que en este casi seria el inicio
         cola.offer(new Nodo(iniX, iniY, null, 0, true));
     }

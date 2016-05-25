@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelo.CostoUniforme;
 import Modelo.PreferenteAmplitud;
+import Modelo.PreferenteProfundidad;
 import Vista.Tablero;
 import java.awt.event.ActionEvent;
 
@@ -20,12 +21,14 @@ public class Tablero_Eventos
     private final String algoritmo;
     private int heuristica;
     private String solucion;
+    private int[] orden;
     
     public Tablero_Eventos(final Tablero tablero)
     {
         this.tablero = tablero;
         this.algoritmo = tablero.getAlgoritmo();
         this.solucion = "";
+        this.orden = new int[4];
         
         this.tablero.bAnterior.addActionListener(
             (ActionEvent ae) -> 
@@ -54,12 +57,10 @@ public class Tablero_Eventos
                 cerrarVentana();
             }
         );
-        
-        realizarBusqueda();
     }
     
     //Metodo encargado de cargar el mapa dependiendo de que busqueda se a seleccionado
-    public final void realizarBusqueda()
+    public void realizarBusqueda()
     {
 //        if (this.algoritmo.equals("A*") && this.heuristica == 1)
 //        {
@@ -188,10 +189,66 @@ public class Tablero_Eventos
             
             this.tablero.taSolucion.setText(solucion);
         }
+        else if (this.algoritmo.equals("Preferente por Profundidad"))
+        {
+            PreferenteProfundidad pp1 = new PreferenteProfundidad(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1],
+                    orden
+            );
+            
+            long t = System.currentTimeMillis();
+            pp1.busqueda();
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(pp1.getNodoMeta().getCamino());
+            
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : pp1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + pp1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + pp1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + pp1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + pp1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + pp1.getProfundidad() + "\n";
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
     }
     
     public void cerrarVentana()
     {
         this.tablero.setVisible(false);
+    }
+
+    public int getHeuristica() {
+        return heuristica;
+    }
+
+    public void setHeuristica(int heuristica) {
+        this.heuristica = heuristica;
+    }
+
+    public String getSolucion() {
+        return solucion;
+    }
+
+    public void setSolucion(String solucion) {
+        this.solucion = solucion;
+    }
+
+    public int[] getOrden() {
+        return orden;
+    }
+
+    public void setOrden(int[] orden) {
+        this.orden = orden;
     }
 }

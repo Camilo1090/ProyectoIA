@@ -5,8 +5,11 @@
  */
 package Modelo;
 
+import java.util.AbstractQueue;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  *
@@ -27,7 +30,8 @@ public class Busqueda
     protected int endY;
     
     protected PriorityQueue<Nodo> priorityQueue;
-    protected Queue<Nodo> cola;
+    protected LinkedList<Nodo> cola;
+    protected Stack<Nodo> pila;
 
     public Busqueda() 
     {

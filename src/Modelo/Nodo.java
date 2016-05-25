@@ -13,9 +13,11 @@ import java.util.ArrayList;
  */
 public class Nodo 
 {
-    public boolean meta1;
+    public boolean meta1; // booleanos de metas encontradas
     public boolean meta2;
     public boolean meta3;
+    public int posMeta1; // guardan desde que elemento del arreglo del camino empieza cada meta
+    public int posMeta2;
     private int x;
     private int y;
     private double costo;
@@ -46,6 +48,8 @@ public class Nodo
             meta1 = padre.meta1;
             meta2 = padre.meta2;
             meta3 = padre.meta3;
+            posMeta1 = padre.posMeta1;
+            posMeta2 = padre.posMeta2;
             turnosBonus = padre.turnosBonus - 1;
             tortugas.addAll(padre.tortugas);
             anterior = new int[]{padre.getX(), padre.getY()};
@@ -56,6 +60,8 @@ public class Nodo
             meta1 = false;
             meta2 = false;
             meta3 = false;
+            posMeta1 = 0;
+            posMeta2 = 0;
             turnosBonus = 0;
             anterior = new int[2];
         }

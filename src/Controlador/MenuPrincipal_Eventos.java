@@ -7,7 +7,6 @@ package Controlador;
 
 import Vista.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -47,6 +46,7 @@ public class MenuPrincipal_Eventos
             (ActionEvent ae) -> 
             {
                 activarHeuristicas();
+                activarOrden();
             }
         );
     }
@@ -83,7 +83,17 @@ public class MenuPrincipal_Eventos
             {
                 tablero.setLocationRelativeTo(null);
                 tablero.setMovimiento(0);
-                Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);
+                Tablero_Eventos tableroEventos = new Tablero_Eventos(tablero);                
+                if (this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("Preferente por Profundidad"))
+                {
+                    int[] orden = new int[]{this.menuPrincipal.cbPrimero.getSelectedIndex()+1,
+                                        this.menuPrincipal.cbSegundo.getSelectedIndex()+1,
+                                        this.menuPrincipal.cbTercero.getSelectedIndex()+1,
+                                        this.menuPrincipal.cbCuarto.getSelectedIndex()+1};
+                    //System.out.println(orden[0] + " " + orden[1] + " " + orden[2] + " " + orden[3]);
+                    tableroEventos.setOrden(orden);
+                }
+                tableroEventos.realizarBusqueda();
                 tablero.setVisible(true);
             }
             else
@@ -102,6 +112,24 @@ public class MenuPrincipal_Eventos
         else
         {
             this.menuPrincipal.cbHeuristica.setEnabled(false);
+        }
+    }
+    
+    public void activarOrden()
+    {
+        if (this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("Preferente por Profundidad"))
+        {
+            this.menuPrincipal.cbPrimero.setEnabled(true);
+            this.menuPrincipal.cbSegundo.setEnabled(true);
+            this.menuPrincipal.cbTercero.setEnabled(true);
+            this.menuPrincipal.cbCuarto.setEnabled(true);
+        }
+        else
+        {
+            this.menuPrincipal.cbPrimero.setEnabled(false);
+            this.menuPrincipal.cbSegundo.setEnabled(false);
+            this.menuPrincipal.cbTercero.setEnabled(false);
+            this.menuPrincipal.cbCuarto.setEnabled(false);
         }
     }
 }

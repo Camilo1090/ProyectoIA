@@ -40,11 +40,20 @@ public class MenuPrincipal extends javax.swing.JFrame
         bArchivo = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cbHeuristica = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cbPrimero = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cbSegundo = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cbTercero = new javax.swing.JComboBox<>();
+        cbCuarto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proyecto IA - Buscando a Todos");
-        setMinimumSize(new java.awt.Dimension(400, 300));
-        setPreferredSize(new java.awt.Dimension(400, 300));
+        setMinimumSize(new java.awt.Dimension(550, 350));
+        setPreferredSize(new java.awt.Dimension(550, 350));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -62,7 +71,7 @@ public class MenuPrincipal extends javax.swing.JFrame
         jLabel3.setText("Archivo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 10, 0);
         jPanel1.add(jLabel3, gridBagConstraints);
@@ -80,7 +89,7 @@ public class MenuPrincipal extends javax.swing.JFrame
         tfArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 10, 10);
@@ -97,11 +106,11 @@ public class MenuPrincipal extends javax.swing.JFrame
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 5, 10);
         jPanel1.add(cbAlgoritmos, gridBagConstraints);
 
-        bEmpezar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        bEmpezar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         bEmpezar.setText("Empezar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
@@ -111,11 +120,11 @@ public class MenuPrincipal extends javax.swing.JFrame
         bArchivo.setText("...");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 10, 10);
         jPanel1.add(bArchivo, gridBagConstraints);
 
-        jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Heuristica");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -135,6 +144,96 @@ public class MenuPrincipal extends javax.swing.JFrame
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
         jPanel1.add(cbHeuristica, gridBagConstraints);
 
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Primero:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
+        jPanel2.add(jLabel5, gridBagConstraints);
+
+        cbPrimero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbPrimero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arriba", "Derecha", "Abajo", "Izquierda" }));
+        cbPrimero.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
+        jPanel2.add(cbPrimero, gridBagConstraints);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Segundo:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
+        jPanel2.add(jLabel6, gridBagConstraints);
+
+        cbSegundo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbSegundo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arriba", "Derecha", "Abajo", "Izquierda" }));
+        cbSegundo.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
+        jPanel2.add(cbSegundo, gridBagConstraints);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Tercero:");
+        jLabel7.setToolTipText("");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
+        jPanel2.add(jLabel7, gridBagConstraints);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Cuarto:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
+        jPanel2.add(jLabel8, gridBagConstraints);
+
+        cbTercero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbTercero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arriba", "Derecha", "Abajo", "Izquierda" }));
+        cbTercero.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
+        jPanel2.add(cbTercero, gridBagConstraints);
+
+        cbCuarto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbCuarto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arriba", "Derecha", "Abajo", "Izquierda" }));
+        cbCuarto.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
+        jPanel2.add(cbCuarto, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel1.add(jPanel2, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -151,13 +250,22 @@ public class MenuPrincipal extends javax.swing.JFrame
     public javax.swing.JButton bArchivo;
     public javax.swing.JButton bEmpezar;
     public javax.swing.JComboBox<String> cbAlgoritmos;
+    public javax.swing.JComboBox<String> cbCuarto;
     public javax.swing.JComboBox<String> cbHeuristica;
+    public javax.swing.JComboBox<String> cbPrimero;
+    public javax.swing.JComboBox<String> cbSegundo;
+    public javax.swing.JComboBox<String> cbTercero;
     public javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     public javax.swing.JTextField tfArchivo;
     // End of variables declaration//GEN-END:variables
 }
