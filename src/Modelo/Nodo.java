@@ -28,7 +28,6 @@ public class Nodo
     private boolean evitar;
     private double heuristica;
     private double fn;
-    int prueba;
 
     //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
     public Nodo(int x, int y, Nodo padre, double costo, boolean evitar)
