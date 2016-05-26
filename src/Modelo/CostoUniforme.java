@@ -42,31 +42,31 @@ public class CostoUniforme extends Busqueda
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
 
-            if (isGoal1(nodo) && !nodo.meta1)
-            {
+            if (isGoal1(nodo) && !nodo.isMeta1())
+            {                
+                nodo.setMeta1(true);
+                nodo.setEvitar(false);
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta1 = true;
-                nodo.evitar = false;
                 //nodosExpandidos++;
                 System.out.println("-----------------------------------------META1");
             }
-            else if (isGoal2(nodo) && nodo.meta1 && !nodo.meta2)
+            else if (isGoal2(nodo) && nodo.isMeta1() && !nodo.isMeta2())
             {
+                nodo.setMeta2(true);
+                nodo.setEvitar(false);
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta2 = true;
-                nodo.evitar = false;
                 //nodosExpandidos++;
                 System.out.println("-----------------------------------------META2");
             }
-            else if (isGoal3(nodo) && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+            else if (isGoal3(nodo) && nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
             {
-                nodoMeta = nodo;
-                nodo.meta3 = true;
-                nodo.evitar = false;
+                nodo.setMeta3(true);
+                nodo.setEvitar(false);
+                setNodoMeta(nodo);
                 fin = true;
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
                 System.out.println("-----------------------------------------META3");
             }
             
@@ -76,23 +76,23 @@ public class CostoUniforme extends Busqueda
                 expandir(nodo, 2);
                 expandir(nodo, 3);
                 expandir(nodo, 4);
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
             System.out.println(c);
             c++;    
         }
         //Se caulcula cual es el factor de ramificacion una vez a encontrado la meta
-        factorRamificacion = calcularFactorRamificacion(profundidad, nodosCreados);  
+        setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));  
     }
 
-    //Metodo encargado de expandir un nodo en una direccion determinada
-    public void expandir(Nodo nodo, int direccion)
+    //Metodo encargado de expandir un nodo en una operador determinada
+    public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
         int y = 0;
         
-        switch (direccion)
+        switch (operador)
         {
             //Arriba
             case 1:
@@ -123,7 +123,7 @@ public class CostoUniforme extends Busqueda
         /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
         dirige es un acceso valido y que no lo halla recorrido antes*/
         boolean seguir = true;
-        if (nodo.anterior[0] == x && nodo.anterior[1] == y && nodo.evitar)
+        if (nodo.getAnterior()[0] == x && nodo.getAnterior()[1] == y && nodo.isEvitar())
         {
             seguir = false;
         }
@@ -132,7 +132,7 @@ public class CostoUniforme extends Busqueda
         {            
             boolean bonus = isTurtle(nodo);
             
-            for (int[] tortuga : nodo.tortugas) 
+            for (int[] tortuga : nodo.getTortugas()) 
             {
                 if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
                 {
@@ -153,7 +153,7 @@ public class CostoUniforme extends Busqueda
                 priorityQueue.offer(new Nodo(x, y, nodo, costo, true));
             }
             
-            nodosCreados++;
+            setNodosCreados(getNodosCreados() + 1);
         }
     }
 

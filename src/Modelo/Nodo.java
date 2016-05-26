@@ -13,19 +13,19 @@ import java.util.ArrayList;
  */
 public class Nodo 
 {
-    public boolean meta1; // booleanos de metas encontradas
-    public boolean meta2;
-    public boolean meta3;
-    public int posMeta1; // guardan desde que elemento del arreglo del camino empieza cada meta
-    public int posMeta2;
+    private boolean meta1; // booleanos de metas encontradas
+    private boolean meta2;
+    private boolean meta3;
+    private int posMeta1; // guardan desde que elemento del arreglo del camino empieza cada meta
+    private int posMeta2;
     private int x;
     private int y;
     private double costo;
     private ArrayList<int[]> camino;
-    public ArrayList<int[]> tortugas;
-    public int turnosBonus;
-    public int[] anterior;
-    public boolean evitar;
+    private ArrayList<int[]> tortugas;
+    private int turnosBonus;
+    private int[] anterior;
+    private boolean evitar;
     private double heuristica;
     private double fn;
 
@@ -117,6 +117,7 @@ public class Nodo
         this.fn = this.costo + this.heuristica;
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
+        this.evitar = evitar;
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
@@ -157,6 +158,7 @@ public class Nodo
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
         turnosBonus = 3;
+        this.evitar = evitar;
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
@@ -217,7 +219,7 @@ public class Nodo
     }
 
     public boolean isBonus() {
-        return turnosBonus > 0;
+        return getTurnosBonus() > 0;
     }
 
     public double getHeuristica() {
@@ -234,5 +236,131 @@ public class Nodo
 
     public void setFn(double fn) {
         this.fn = fn;
+    }
+
+    /**
+     * @return the meta1
+     */
+    public boolean isMeta1() {
+        return meta1;
+    }
+
+    /**
+     * @param meta1 the meta1 to set
+     */
+    public void setMeta1(boolean meta1) {
+        this.meta1 = meta1;
+    }
+
+    /**
+     * @return the meta2
+     */
+    public boolean isMeta2() {
+        return meta2;
+    }
+
+    /**
+     * @param meta2 the meta2 to set
+     */
+    public void setMeta2(boolean meta2) {
+        this.meta2 = meta2;
+    }
+
+    /**
+     * @return the meta3
+     */
+    public boolean isMeta3() {
+        return meta3;
+    }
+
+    /**
+     * @param meta3 the meta3 to set
+     */
+    public void setMeta3(boolean meta3) {
+        this.meta3 = meta3;
+    }
+
+    /**
+     * @return the posMeta1
+     */
+    public int getPosMeta1() {
+        return posMeta1;
+    }
+
+    /**
+     * @param posMeta1 the posMeta1 to set
+     */
+    public void setPosMeta1(int posMeta1) {
+        this.posMeta1 = posMeta1;
+    }
+
+    /**
+     * @return the posMeta2
+     */
+    public int getPosMeta2() {
+        return posMeta2;
+    }
+
+    /**
+     * @param posMeta2 the posMeta2 to set
+     */
+    public void setPosMeta2(int posMeta2) {
+        this.posMeta2 = posMeta2;
+    }
+
+    /**
+     * @return the tortugas
+     */
+    public ArrayList<int[]> getTortugas() {
+        return tortugas;
+    }
+
+    /**
+     * @param tortugas the tortugas to set
+     */
+    public void setTortugas(ArrayList<int[]> tortugas) {
+        this.tortugas = tortugas;
+    }
+
+    /**
+     * @return the turnosBonus
+     */
+    public int getTurnosBonus() {
+        return turnosBonus;
+    }
+
+    /**
+     * @param turnosBonus the turnosBonus to set
+     */
+    public void setTurnosBonus(int turnosBonus) {
+        this.turnosBonus = turnosBonus;
+    }
+
+    /**
+     * @return the anterior
+     */
+    public int[] getAnterior() {
+        return anterior;
+    }
+
+    /**
+     * @param anterior the anterior to set
+     */
+    public void setAnterior(int[] anterior) {
+        this.anterior = anterior;
+    }
+
+    /**
+     * @return the evitar
+     */
+    public boolean isEvitar() {
+        return evitar;
+    }
+
+    /**
+     * @param evitar the evitar to set
+     */
+    public void setEvitar(boolean evitar) {
+        this.evitar = evitar;
     }
 }

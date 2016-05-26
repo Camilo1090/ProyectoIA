@@ -32,7 +32,7 @@ public class Busqueda
         nodosExpandidos = 0;
         profundidad = 0;
         factorRamificacion = 0;
-        nodoMeta = new Nodo(iniX, iniY, null, 0, true);
+        nodoMeta = new Nodo(getIniX(), getIniY(), null, 0, true);
     }
 
     //Metodo encargado de retornar true si la posicion es valida
@@ -42,7 +42,7 @@ public class Busqueda
         
         try 
         {
-            if (matriz[posX][posY] == 1)
+            if (getMatriz()[posX][posY] == 1)
             {
                 valido = false;
             }
@@ -62,7 +62,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (matriz[nodo.getX()][nodo.getY()] == 7)
+            if (getMatriz()[nodo.getX()][nodo.getY()] == 7)
             {
                 isGoal = true;
             }
@@ -78,7 +78,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (matriz[nodo.getX()][nodo.getY()] == 6)
+            if (getMatriz()[nodo.getX()][nodo.getY()] == 6)
             {
                 isGoal = true;
             }
@@ -94,7 +94,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (matriz[nodo.getX()][nodo.getY()] == 5)
+            if (getMatriz()[nodo.getX()][nodo.getY()] == 5)
             {
                 isGoal = true;
             }
@@ -109,7 +109,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (matriz[nodo.getX()][nodo.getY()] == 4)
+            if (getMatriz()[nodo.getX()][nodo.getY()] == 4)
             {
                 isTurtle = true;
             }
@@ -124,7 +124,7 @@ public class Busqueda
         
         if (posicionValida(nodo.getX(), nodo.getY()))
         {
-            if (matriz[nodo.getX()][nodo.getY()] == 8)
+            if (getMatriz()[nodo.getX()][nodo.getY()] == 8)
             {
                 isAquaman = true;
             }
@@ -148,9 +148,9 @@ public class Busqueda
     //Metodo de encargado de Actualizar la profundidad para calcular la mayor profundidad
     public void actualizarProfundidad(int profundidad)
     {
-        if (profundidad > this.profundidad)
+        if (profundidad > this.getProfundidad())
         {
-            this.profundidad = profundidad;
+            this.setProfundidad(profundidad);
         }
     }
 
@@ -159,7 +159,7 @@ public class Busqueda
     {
         double c = 0;
         
-        switch (matriz[posX][posY])
+        switch (getMatriz()[posX][posY])
         {
             case 0:
                 c = 1;
@@ -238,5 +238,75 @@ public class Busqueda
 
     public void setNodoMeta(Nodo nodoMeta) {
         this.nodoMeta = nodoMeta;
+    }
+
+    /**
+     * @return the matriz
+     */
+    public int[][] getMatriz() {
+        return matriz;
+    }
+
+    /**
+     * @param matriz the matriz to set
+     */
+    public void setMatriz(int[][] matriz) {
+        this.matriz = matriz;
+    }
+
+    /**
+     * @return the iniX
+     */
+    public int getIniX() {
+        return iniX;
+    }
+
+    /**
+     * @param iniX the iniX to set
+     */
+    public void setIniX(int iniX) {
+        this.iniX = iniX;
+    }
+
+    /**
+     * @return the iniY
+     */
+    public int getIniY() {
+        return iniY;
+    }
+
+    /**
+     * @param iniY the iniY to set
+     */
+    public void setIniY(int iniY) {
+        this.iniY = iniY;
+    }
+
+    /**
+     * @return the endX
+     */
+    public int getEndX() {
+        return endX;
+    }
+
+    /**
+     * @param endX the endX to set
+     */
+    public void setEndX(int endX) {
+        this.endX = endX;
+    }
+
+    /**
+     * @return the endY
+     */
+    public int getEndY() {
+        return endY;
+    }
+
+    /**
+     * @param endY the endY to set
+     */
+    public void setEndY(int endY) {
+        this.endY = endY;
     }
 }

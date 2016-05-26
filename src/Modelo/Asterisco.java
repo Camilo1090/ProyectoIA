@@ -16,11 +16,11 @@ public class Asterisco extends Busqueda
 {
     /*Para los valores de la typeHeuristic asumiremos que 1 es la primera typeHeuristic y para
     cualquier otro valor la segunda typeHeuristic*/
-    private final PriorityQueue<Nodo> priorityQueue;
-    private final int tipoHeuristica;
-    private final int[] posMeta1;
-    private final int[] posMeta2;
-    private final int[] posMeta3;
+    private PriorityQueue<Nodo> priorityQueue;
+    private int tipoHeuristica;
+    private int[] posMeta1;
+    private int[] posMeta2;
+    private int[] posMeta3;
 
     public Asterisco(int[][] matriz, int iniX, int iniY, int[] posMeta1, int[] posMeta2, int[] posMeta3, int tipoHeuristica)
     {
@@ -36,7 +36,16 @@ public class Asterisco extends Busqueda
         PQsort pqs = new PQsort();
         priorityQueue = new PriorityQueue<>(pqs);
         //Se añade el primer nodo a la cola de prioridad que en este caso seria el inicio
-        priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularManhattan(this.iniX, this.iniY, posMeta1))); //Se añade el primer nodo a la cola de prioridad
+        if (tipoHeuristica == 1)
+        {
+            //Se añade el primer nodo a la cola de prioridad
+            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularManhattan(this.getIniX(), this.getIniY(), posMeta1)));
+        }
+        else
+        {
+            //Se añade el primer nodo a la cola de prioridad
+            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica(this.getIniX(), this.getIniY(), posMeta1)));
+        }
     }
 
     /*Metodo encargado de realizar la busqueda, esta comienza y no para hasta que
@@ -47,37 +56,37 @@ public class Asterisco extends Busqueda
         boolean fin = false; //Variable que comprueba si a terminado
         int c = 0;
         
-        while (!fin && priorityQueue.size() > 0)
+        while (!fin && getPriorityQueue().size() > 0)
         {
-            Nodo nodo = priorityQueue.poll(); //Saca y remueve el nodo que se va a expandir
+            Nodo nodo = getPriorityQueue().poll(); //Saca y remueve el nodo que se va a expandir
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
 
-            if (isGoal1(nodo) && !nodo.meta1)
+            if (isGoal1(nodo) && !nodo.isMeta1())
             {
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta1 = true;
-                nodo.evitar = false;
+                nodo.setMeta1(true);
+                nodo.setEvitar(false);
                 //nodosExpandidos++;
                 System.out.println("-----------------------------------------META1");
             }
-            else if (isGoal2(nodo) && nodo.meta1 && !nodo.meta2)
+            else if (isGoal2(nodo) && nodo.isMeta1() && !nodo.isMeta2())
             {
-                nodoMeta = nodo;
-                fin = true;
-                nodo.meta2 = true;
-                nodo.evitar = false;
+                //nodoMeta = nodo;
+                //fin = true;
+                nodo.setMeta2(true);
+                nodo.setEvitar(false);
                 //nodosExpandidos++;
                 System.out.println("-----------------------------------------META2");
             }
-            else if (isGoal3(nodo) && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+            else if (isGoal3(nodo) && nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
             {
-                nodoMeta = nodo;
-                nodo.meta3 = true;
-                nodo.evitar = false;
+                setNodoMeta(nodo);
+                nodo.setMeta3(true);
+                nodo.setEvitar(false);
                 fin = true;
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
                 System.out.println("-----------------------------------------META3");
             }
             
@@ -87,23 +96,23 @@ public class Asterisco extends Busqueda
                 expandir(nodo, 2);
                 expandir(nodo, 3);
                 expandir(nodo, 4);
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
             System.out.println(c);
             c++; 
         }
         //Se caulcula cual es el factor de ramificacion una vez a encontrado la meta
-        factorRamificacion = calcularFactorRamificacion(profundidad, nodosCreados);
+        setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));
     }
 
-    //Metodo encargado de expandir un nodo en una direccion determinada
-    public void expandir(Nodo nodo, int direccion)
+    //Metodo encargado de expandir un nodo en una operador determinada
+    public void expandir(Nodo nodo, int operador)
     {
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
         
-        switch (direccion)
+        switch (operador)
         {
             //Arriba
             case 1:
@@ -134,7 +143,7 @@ public class Asterisco extends Busqueda
         /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
         dirige es un acceso valido y que no lo halla recorrido antes*/
         boolean seguir = true;
-        if (nodo.anterior[0] == x && nodo.anterior[1] == y && nodo.evitar)
+        if (nodo.getAnterior()[0] == x && nodo.getAnterior()[1] == y && nodo.isEvitar())
         {
             seguir = false;
         }
@@ -143,7 +152,7 @@ public class Asterisco extends Busqueda
         {            
             boolean bonus = isTurtle(nodo);
             
-            for (int[] tortuga : nodo.tortugas) 
+            for (int[] tortuga : nodo.getTortugas()) 
             {
                 if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
                 {
@@ -155,53 +164,53 @@ public class Asterisco extends Busqueda
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() | bonus));
             double heuristica = 0;
             
-            if (tipoHeuristica == 1)
+            if (getTipoHeuristica() == 1)
             {
-                if (!nodo.meta1)
+                if (!nodo.isMeta1())
                 {
-                    heuristica = calcularManhattan(x, y, posMeta1);
+                    heuristica = calcularManhattan(x, y, getPosMeta1());
                 }
-                else if (nodo.meta1 && !nodo.meta2)
+                else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
-                    heuristica = calcularManhattan(x, y, posMeta2);
+                    heuristica = calcularManhattan(x, y, getPosMeta2());
                 }
-                else if (nodo.meta1 && nodo.meta2 && !nodo.meta3)
+                else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
-                    heuristica = calcularManhattan(x, y, posMeta3);
+                    heuristica = calcularManhattan(x, y, getPosMeta3());
                 }
             }
             else 
             {
-                if (!nodo.meta1)
+                if (!nodo.isMeta1())
                 {
-                    heuristica = calcularHeuristica(x, y, posMeta1);
+                    heuristica = calcularHeuristica(x, y, getPosMeta1());
                 }
-                else if (nodo.meta1 && !nodo.meta2)
+                else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
-                    heuristica = calcularHeuristica(x, y, posMeta2);
+                    heuristica = calcularHeuristica(x, y, getPosMeta2());
                 }
-                else if (nodo.meta1 && nodo.meta2 && !nodo.meta3)
+                else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
-                    heuristica = calcularHeuristica(x, y, posMeta3);
+                    heuristica = calcularHeuristica(x, y, getPosMeta3());
                 }
             }
             
             //Se añade el nuevo nodo a la cola de prioridad
             if (bonus)
             {
-                priorityQueue.offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
+                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
             }
             else
             {
-                priorityQueue.offer(new Nodo(x, y, nodo, costo, true, heuristica));
+                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, true, heuristica));
             }
             
-            nodosCreados++;
+            setNodosCreados(getNodosCreados() + 1);
         }
     }
 
     //Metodo encargado de retornar la distancia en L
-    public int calcularManhattan(int posx, int posy, int[] meta)
+    public final int calcularManhattan(int posx, int posy, int[] meta)
     {
         int distanciaL;
         int distanciaX = Math.abs(posx - meta[0]);
@@ -210,12 +219,83 @@ public class Asterisco extends Busqueda
 
         return distanciaL;
     }
+    
     //Heuristica distancia en L * (7 - charge)
-    public double calcularHeuristica(int posx, int posy, int[] meta)
+    public final double calcularHeuristica(int posx, int posy, int[] meta)
     {
         double heuristica;
         heuristica = calcularManhattan(posx, posy, meta) * (0.5);
         return heuristica;
+    }
+
+    /**
+     * @return the priorityQueue
+     */
+    public PriorityQueue<Nodo> getPriorityQueue() {
+        return priorityQueue;
+    }
+
+    /**
+     * @param priorityQueue the priorityQueue to set
+     */
+    public void setPriorityQueue(PriorityQueue<Nodo> priorityQueue) {
+        this.priorityQueue = priorityQueue;
+    }
+
+    /**
+     * @return the tipoHeuristica
+     */
+    public int getTipoHeuristica() {
+        return tipoHeuristica;
+    }
+
+    /**
+     * @param tipoHeuristica the tipoHeuristica to set
+     */
+    public void setTipoHeuristica(int tipoHeuristica) {
+        this.tipoHeuristica = tipoHeuristica;
+    }
+
+    /**
+     * @return the posMeta1
+     */
+    public int[] getPosMeta1() {
+        return posMeta1;
+    }
+
+    /**
+     * @param posMeta1 the posMeta1 to set
+     */
+    public void setPosMeta1(int[] posMeta1) {
+        this.posMeta1 = posMeta1;
+    }
+
+    /**
+     * @return the posMeta2
+     */
+    public int[] getPosMeta2() {
+        return posMeta2;
+    }
+
+    /**
+     * @param posMeta2 the posMeta2 to set
+     */
+    public void setPosMeta2(int[] posMeta2) {
+        this.posMeta2 = posMeta2;
+    }
+
+    /**
+     * @return the posMeta3
+     */
+    public int[] getPosMeta3() {
+        return posMeta3;
+    }
+
+    /**
+     * @param posMeta3 the posMeta3 to set
+     */
+    public void setPosMeta3(int[] posMeta3) {
+        this.posMeta3 = posMeta3;
     }
 
     //Subclase encargada de ordenar la cola de prioridad de acuerdo al costo

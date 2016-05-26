@@ -36,7 +36,16 @@ public class Avara extends Busqueda
         PQsort pqs = new PQsort();
         priorityQueue = new PriorityQueue<>(pqs);
         //Se añade el primer nodo a la cola de prioridad que en este caso seria el inicio
-        priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularManhattan(this.iniX, this.iniY, posMeta1))); //Se añade el primer nodo a la cola de prioridad
+        if (tipoHeuristica == 1)
+        {
+            //Se añade el primer nodo a la cola de prioridad
+            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularManhattan(this.getIniX(), this.getIniY(), posMeta1)));
+        }
+        else
+        {
+            //Se añade el primer nodo a la cola de prioridad
+            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica(this.getIniX(), this.getIniY(), posMeta1)));
+        }
     }
 
     /*Metodo encargado de realizar la busqueda, esta comienza y no para hasta que
@@ -53,31 +62,33 @@ public class Avara extends Busqueda
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
 
-            if (isGoal1(nodo) && !nodo.meta1)
-            {
+            if (isGoal1(nodo) && !nodo.isMeta1())
+            {                
+                nodo.setMeta1(true);
+                nodo.setEvitar(false);
+                nodo.setPosMeta1(nodo.getCamino().size());
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta1 = true;
-                nodo.evitar = false;
                 //nodosExpandidos++;
                 System.out.println("-----------------------------------------META1");
             }
-            else if (isGoal2(nodo) && nodo.meta1 && !nodo.meta2)
+            else if (isGoal2(nodo) && nodo.isMeta1() && !nodo.isMeta2())
             {
+                nodo.setMeta2(true);
+                nodo.setEvitar(false);
+                nodo.setPosMeta2(nodo.getCamino().size());
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta2 = true;
-                nodo.evitar = false;
                 //nodosExpandidos++;
                 System.out.println("-----------------------------------------META2");
             }
-            else if (isGoal3(nodo) && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+            else if (isGoal3(nodo) && nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
             {
-                nodoMeta = nodo;
-                nodo.meta3 = true;
-                nodo.evitar = false;
+                nodo.setMeta3(true);
+                nodo.setEvitar(false);
+                setNodoMeta(nodo);
                 fin = true;
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
                 System.out.println("-----------------------------------------META3");
             }
             
@@ -87,23 +98,23 @@ public class Avara extends Busqueda
                 expandir(nodo, 2);
                 expandir(nodo, 3);
                 expandir(nodo, 4);
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
             System.out.println(c);
             c++; 
         }
         //Se caulcula cual es el factor de ramificacion una vez a encontrado la meta
-        factorRamificacion = calcularFactorRamificacion(profundidad, nodosCreados);
+        setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));
     }
 
-    //Metodo encargado de expandir un nodo en una direccion determinada
-    public void expandir(Nodo nodo, int direccion)
+    //Metodo encargado de expandir un nodo en una operador determinada
+    public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
         int y = 0;
         
-        switch (direccion)
+        switch (operador)
         {
             //Arriba
             case 1:
@@ -140,7 +151,7 @@ public class Avara extends Busqueda
 //            seguir = false;
 //        }
         // evitar ciclos
-        if (nodo.evitar && !nodo.meta1)
+        if (nodo.isEvitar() && !nodo.isMeta1())
         {
             for (int[] pos : nodo.getCamino())
             {
@@ -151,9 +162,9 @@ public class Avara extends Busqueda
                 }
             }
         }
-        else if (nodo.evitar && nodo.meta1 && !nodo.meta2)
+        else if (nodo.isEvitar() && nodo.isMeta1() && !nodo.isMeta2())
         {
-            for (int i = nodo.posMeta1; i < nodo.getCamino().size(); i++)
+            for (int i = nodo.getPosMeta1(); i < nodo.getCamino().size(); i++)
             {
                 if (nodo.getCamino().get(i)[0] == x && nodo.getCamino().get(i)[1] == y)
                 {
@@ -162,9 +173,9 @@ public class Avara extends Busqueda
                 }
             }
         }
-        else if (nodo.evitar && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+        else if (nodo.isEvitar() && nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
         {
-            for (int i = nodo.posMeta2; i < nodo.getCamino().size(); i++)
+            for (int i = nodo.getPosMeta2(); i < nodo.getCamino().size(); i++)
             {
                 if (nodo.getCamino().get(i)[0] == x && nodo.getCamino().get(i)[1] == y)
                 {
@@ -178,7 +189,7 @@ public class Avara extends Busqueda
         {            
             boolean bonus = isTurtle(nodo);
             
-            for (int[] tortuga : nodo.tortugas) 
+            for (int[] tortuga : nodo.getTortugas()) 
             {
                 if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
                 {
@@ -192,30 +203,30 @@ public class Avara extends Busqueda
             
             if (tipoHeuristica == 1)
             {
-                if (!nodo.meta1)
+                if (!nodo.isMeta1())
                 {
                     heuristica = calcularManhattan(x, y, posMeta1);
                 }
-                else if (nodo.meta1 && !nodo.meta2)
+                else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
                     heuristica = calcularManhattan(x, y, posMeta2);
                 }
-                else if (nodo.meta1 && nodo.meta2 && !nodo.meta3)
+                else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
                     heuristica = calcularManhattan(x, y, posMeta3);
                 }
             }
             else 
             {
-                if (!nodo.meta1)
+                if (!nodo.isMeta1())
                 {
                     heuristica = calcularHeuristica(x, y, posMeta1);
                 }
-                else if (nodo.meta1 && !nodo.meta2)
+                else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
                     heuristica = calcularHeuristica(x, y, posMeta2);
                 }
-                else if (nodo.meta1 && nodo.meta2 && !nodo.meta3)
+                else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
                     heuristica = calcularHeuristica(x, y, posMeta3);
                 }
@@ -231,7 +242,7 @@ public class Avara extends Busqueda
                 priorityQueue.offer(new Nodo(x, y, nodo, costo, true, heuristica));
             }
             
-            nodosCreados++;
+            setNodosCreados(getNodosCreados() + 1);
         }
     }
 
@@ -245,6 +256,7 @@ public class Avara extends Busqueda
 
         return distanciaL;
     }
+    
     //Heuristica distancia en L * (7 - charge)
     public double calcularHeuristica(int posx, int posy, int[] meta)
     {

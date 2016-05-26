@@ -24,7 +24,7 @@ public class PreferenteProfundidad extends Busqueda
         this.orden = orden;
         
         pila = new Stack<>();
-        //Se añade el primer nodo a la pila de prioridad que en este caso seria el inicio
+        //Se añade el primer nodo a la pila que en este caso seria el inicio
         pila.push(new Nodo(iniX, iniY, null, 0, true));
     }
 
@@ -33,8 +33,8 @@ public class PreferenteProfundidad extends Busqueda
     * no se encontraria la meta*/
     public void busqueda()
     {
-        boolean fin = false; //Variable que comprueba si a terminado
-        int c = 0;
+        boolean fin = false; //Variable que comprueba si ha terminado la busqueda
+        int c = 0; // variable para contar cuantos ciclos de busqueda se hacen
         
         while (!fin && pila.size() > 0)
         {
@@ -42,30 +42,33 @@ public class PreferenteProfundidad extends Busqueda
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
             
-            if (isGoal1(nodo) && !nodo.meta1)
-            {
+            if (isGoal1(nodo) && !nodo.isMeta1())
+            {                
+                nodo.setMeta1(true);
+                nodo.setEvitar(false);
+                nodo.setPosMeta1(nodo.getCamino().size());
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta1 = true;
-                nodo.evitar = false;
-                nodo.posMeta1 = nodo.getCamino().size();
+                //nodosExpandidos++;
                 System.out.println("-----------------------------------------META1");
             }
-            else if (isGoal2(nodo) && nodo.meta1 && !nodo.meta2)
-            {
+            else if (isGoal2(nodo) && nodo.isMeta1() && !nodo.isMeta2())
+            {                
+                nodo.setMeta2(true);
+                nodo.setEvitar(false);
+                nodo.setPosMeta2(nodo.getCamino().size());
                 //nodoMeta = nodo;
                 //fin = true;
-                nodo.meta2 = true;
-                nodo.evitar = false;
-                nodo.posMeta2 = nodo.getCamino().size();
+                //nodosExpandidos++;
                 System.out.println("-----------------------------------------META2");
             }
-            else if (isGoal3(nodo) && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+            else if (isGoal3(nodo) && nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
             {
-                nodoMeta = nodo;
-                nodo.meta3 = true;
-                nodo.evitar = false;
+                setNodoMeta(nodo);
+                nodo.setMeta3(true);
+                nodo.setEvitar(false);
                 fin = true;
+                setNodosExpandidos(getNodosExpandidos() + 1);
                 System.out.println("-----------------------------------------META3");
             }
             
@@ -75,23 +78,23 @@ public class PreferenteProfundidad extends Busqueda
                 expandir(nodo, orden[2]);
                 expandir(nodo, orden[1]);
                 expandir(nodo, orden[0]);
-                nodosExpandidos++;
+                setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
             System.out.println(c);
             c++;    
         }
         //Se caulcula cual es el factor de ramificacion una vez a encontrado la meta
-        factorRamificacion = calcularFactorRamificacion(profundidad, nodosCreados);  
+        setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));  
     }
 
-    //Metodo encargado de expandir un nodo en una direccion determinada
-    public void expandir(Nodo nodo, int direccion)
+    //Metodo encargado de expandir un nodo en una operador determinada
+    public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
         int y = 0;
         
-        switch (direccion)
+        switch (operador)
         {
             //Arriba
             case 1:
@@ -128,7 +131,7 @@ public class PreferenteProfundidad extends Busqueda
 //            seguir = false;
 //        }
         // evitar ciclos
-        if (nodo.evitar && !nodo.meta1)
+        if (nodo.isEvitar() && !nodo.isMeta1())
         {
             for (int[] pos : nodo.getCamino())
             {
@@ -139,9 +142,9 @@ public class PreferenteProfundidad extends Busqueda
                 }
             }
         }
-        else if (nodo.evitar && nodo.meta1 && !nodo.meta2)
+        else if (nodo.isEvitar() && nodo.isMeta1() && !nodo.isMeta2())
         {
-            for (int i = nodo.posMeta1; i < nodo.getCamino().size(); i++)
+            for (int i = nodo.getPosMeta1(); i < nodo.getCamino().size(); i++)
             {
                 if (nodo.getCamino().get(i)[0] == x && nodo.getCamino().get(i)[1] == y)
                 {
@@ -150,9 +153,9 @@ public class PreferenteProfundidad extends Busqueda
                 }
             }
         }
-        else if (nodo.evitar && nodo.meta1 && nodo.meta2 && !nodo.meta3)
+        else if (nodo.isEvitar() && nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
         {
-            for (int i = nodo.posMeta2; i < nodo.getCamino().size(); i++)
+            for (int i = nodo.getPosMeta2(); i < nodo.getCamino().size(); i++)
             {
                 if (nodo.getCamino().get(i)[0] == x && nodo.getCamino().get(i)[1] == y)
                 {
@@ -166,7 +169,7 @@ public class PreferenteProfundidad extends Busqueda
         {            
             boolean bonus = isTurtle(nodo);
             
-            for (int[] tortuga : nodo.tortugas) 
+            for (int[] tortuga : nodo.getTortugas()) 
             {
                 if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
                 {
@@ -187,7 +190,7 @@ public class PreferenteProfundidad extends Busqueda
                 pila.push(new Nodo(x, y, nodo, costo, true));
             }
             
-            nodosCreados++;
+            setNodosCreados(getNodosCreados() + 1);
         }
     }
 }
