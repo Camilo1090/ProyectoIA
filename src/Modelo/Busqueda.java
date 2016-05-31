@@ -103,6 +103,7 @@ public class Busqueda
         return isGoal;
     }
     
+    //Metodo encargado de comprobar si es un nodo tortuga
     public boolean isTurtle(Nodo nodo)
     {
         boolean isTurtle = false;
@@ -118,6 +119,7 @@ public class Busqueda
         return isTurtle;
     }
     
+    //Metodo encargado de comprobar si es un nodo aquaman
     public boolean isAquaman(Nodo nodo)
     {
         boolean isAquaman = false;
@@ -134,7 +136,7 @@ public class Busqueda
     }
 
     /*Metodo encargado de calcular el factor de ramificacion segun la profundidad y los nodos expandidos
-    * Esta se calcula segun la formula que el profesor uso en el parcial:
+    * Esta se calcula segun la formula dada por el profesor:
     * profundidad = p
     * sumatoria desde i = 0 hasta p de b^i es igual a (b^(profundidad+1) - 1)/( 1)*/
     public double calcularFactorRamificacion(int profudidad, int nodos)

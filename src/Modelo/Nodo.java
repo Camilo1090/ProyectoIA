@@ -29,7 +29,7 @@ public class Nodo
     private double heuristica;
     private double fn;
 
-    //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
+    //Este constructor se usa para la busqueda por costo uniforme, amplitud y profundidad, pues no tienen en cuenta la heuristica
     public Nodo(int x, int y, Nodo padre, double costo, boolean evitar)
     {
         //Se inicializan las variables
@@ -67,7 +67,7 @@ public class Nodo
         }
     }
     
-    //Este constructor se usa para la busqueda por costo uniforme pues no tiene en cuenta la heuristica
+    //Este constructor se usa para la busqueda por costo uniforme, amplitud y profundidad, pues no tienen en cuenta la heuristica
     public Nodo(int x, int y, Nodo padre, double costo, int[] tortuga, boolean evitar)
     {
         //Se inicializan las variables
@@ -106,7 +106,7 @@ public class Nodo
         }
     }
     
-    //Este contructor es usado para la busqueda por A* pues se tiene en cuenta la heuristica
+    //Este contructor es usado para la busqueda por A* y avara pues se tiene en cuenta la heuristica
     public Nodo(int x, int y, Nodo padre, double costo, boolean evitar, double heuristica)
     {
         //Se inicializan las variables
@@ -146,7 +146,7 @@ public class Nodo
         }
     }
 
-    //Este contructor es usado para la busqueda por A* pues se tiene en cuenta la heuristica
+    //Este contructor es usado para la busqueda por A* y avara pues se tiene en cuenta la heuristica
     public Nodo(int x, int y, Nodo padre, double costo, int[] tortuga, boolean evitar, double heuristica)
     {
         //Se inicializan las variables

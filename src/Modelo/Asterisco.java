@@ -90,7 +90,7 @@ public class Asterisco extends Busqueda
                 System.out.println("-----------------------------------------META3");
             }
             
-            if (!isAquaman(nodo) && !fin) //Se comprueba que el robot esta cargado para poder seguir expandiendo
+            if (!isAquaman(nodo) && !fin) // se comprueba que no sea un nodo aquaman o que no haya terminado ya la busqueda 
             { 
                 expandir(nodo, 1);
                 expandir(nodo, 2);
@@ -106,7 +106,7 @@ public class Asterisco extends Busqueda
         setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));
     }
 
-    //Metodo encargado de expandir un nodo en una operador determinada
+    // Metodo encargado de expandir un nodo en un operador determinado
     public void expandir(Nodo nodo, int operador)
     {
         int x;
@@ -140,8 +140,7 @@ public class Asterisco extends Busqueda
                 break;
         }
         
-        /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
-        dirige es un acceso valido y que no lo halla recorrido antes*/
+        // Esta condicion comprueba que no se este devolviendo
         boolean seguir = true;
         if (nodo.getAnterior()[0] == x && nodo.getAnterior()[1] == y && nodo.isEvitar())
         {
@@ -152,6 +151,7 @@ public class Asterisco extends Busqueda
         {            
             boolean bonus = isTurtle(nodo);
             
+            // determina si ya se ha usado la tortuga
             for (int[] tortuga : nodo.getTortugas()) 
             {
                 if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())

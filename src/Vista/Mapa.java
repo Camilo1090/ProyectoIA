@@ -55,7 +55,7 @@ public class Mapa extends JPanel
 
     public Mapa()
     {
-        loadImages(); //Se cargan las
+        loadImages(); //Se cargan las imagenes
         loadMap = false;
         robot = new int[2];
         initPos = new int[2];
@@ -259,35 +259,36 @@ public class Mapa extends JPanel
     public Image getIcons(int numberIcon)
     {
         Image icon;
-        switch (numberIcon){
-            case 1:{
+        switch (numberIcon)
+        {
+            case 1:
                 icon = imgRock;
-            }break;
-            case 2:{
+                break;
+            case 2:
                 icon = null;
-            }break;
-            case 3:{
+                break;
+            case 3:
                 icon = imgShark;
-            }break;
-            case 4:{
+                break;
+            case 4:
                 icon = imgTurtle;
-            }break;
-            case 5:{
+                break;
+            case 5:
                 icon = imgDory;
-            }break;
-            case 6:{
+                break;
+            case 6:
                 icon = imgMarlin;
-            }break;
-            case 7:{
+                break;
+            case 7:
                 icon = imgNemo;
-            }break;
-            case 8:{
+                break;
+            case 8:
                 icon = imgAquaman;
-            }break;
-            default:{
+                break;
+            default:
                 System.err.println("Representacion de imagen no valida");
                 icon = null;
-            }break;
+                break;
         }
         return icon;
     }
@@ -316,6 +317,7 @@ public class Mapa extends JPanel
     public void setRobot(int[] robot, int[] anterior, boolean sentido) 
     {
         this.robot = robot;
+        // efectos visuales de cambios del mapa
 //        int n = positionsMap[anterior[0]][anterior[1]];
 //        
 //        if (sentido)

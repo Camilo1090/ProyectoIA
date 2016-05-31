@@ -33,7 +33,7 @@ public class CostoUniforme extends Busqueda
     * no se encontraria la meta*/
     public void busqueda()
     {
-        boolean fin = false; //Variable que comprueba si a terminado
+        boolean fin = false; //Variable que comprueba si ha terminado
         int c = 0;
         
         while (!fin && priorityQueue.size() > 0)
@@ -70,7 +70,7 @@ public class CostoUniforme extends Busqueda
                 System.out.println("-----------------------------------------META3");
             }
             
-            if (!isAquaman(nodo) && !fin) //Se comprueba que el robot esta cargado para poder seguir expandiendo
+            if (!isAquaman(nodo) && !fin) //Se comprueba que no sea un nodo aquaman
             { 
                 expandir(nodo, 1);
                 expandir(nodo, 2);
@@ -86,7 +86,7 @@ public class CostoUniforme extends Busqueda
         setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));  
     }
 
-    //Metodo encargado de expandir un nodo en una operador determinada
+    //Metodo encargado de expandir un nodo en un operador determinado
     public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
@@ -120,8 +120,7 @@ public class CostoUniforme extends Busqueda
                 break;
         }
         
-        /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
-        dirige es un acceso valido y que no lo halla recorrido antes*/
+        /*Esta condicion comprueba que no se este devolviendo*/
         boolean seguir = true;
         if (nodo.getAnterior()[0] == x && nodo.getAnterior()[1] == y && nodo.isEvitar())
         {

@@ -14,8 +14,6 @@ import java.util.PriorityQueue;
  */
 public class Avara extends Busqueda
 {
-    /*Para los valores de la typeHeuristic asumiremos que 1 es la primera typeHeuristic y para
-    cualquier otro valor la segunda typeHeuristic*/
     private final PriorityQueue<Nodo> priorityQueue;
     private final int tipoHeuristica;
     private final int[] posMeta1;
@@ -92,7 +90,7 @@ public class Avara extends Busqueda
                 System.out.println("-----------------------------------------META3");
             }
             
-            if (!isAquaman(nodo) && !fin) //Se comprueba que el robot esta cargado para poder seguir expandiendo
+            if (!isAquaman(nodo) && !fin) //Se comprueba que no sea un nodo aquaman
             { 
                 expandir(nodo, 1);
                 expandir(nodo, 2);
@@ -108,7 +106,7 @@ public class Avara extends Busqueda
         setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));
     }
 
-    //Metodo encargado de expandir un nodo en una operador determinada
+    //Metodo encargado de expandir un nodo en un operado determinado
     public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
@@ -142,8 +140,7 @@ public class Avara extends Busqueda
                 break;
         }
         
-        /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
-        dirige es un acceso valido y que no lo halla recorrido antes*/
+        // variable para evitar devolverse o evitar ciclos
         boolean seguir = true;
         // evitar devolverse
 //        if (nodo.anterior[0] == x && nodo.anterior[1] == y && nodo.evitar)

@@ -23,7 +23,7 @@ public class PreferenteAmplitud extends Busqueda
         this.iniY = iniY;
         
         cola = new LinkedList<>();
-        //Se añade el primer nodo a la cola de prioridad que en este casi seria el inicio
+        //Se añade el primer nodo a la cola que en este caso seria el inicio
         cola.offer(new Nodo(iniX, iniY, null, 0, true));
     }
 
@@ -69,7 +69,7 @@ public class PreferenteAmplitud extends Busqueda
                 System.out.println("-----------------------------------------META3");
             }
             
-            if (!isAquaman(nodo) && !fin) //Se comprueba que el robot esta cargado para poder seguir expandiendo
+            if (!isAquaman(nodo) && !fin) //Se comprueba que no sea un nodo aquaman
             { 
                 expandir(nodo, 1);
                 expandir(nodo, 2);
@@ -85,7 +85,7 @@ public class PreferenteAmplitud extends Busqueda
         setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));  
     }
 
-    //Metodo encargado de expandir un nodo en una operador determinada
+    //Metodo encargado de expandir un nodo en un operador determinado
     public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
@@ -119,8 +119,7 @@ public class PreferenteAmplitud extends Busqueda
                 break;
         }
         
-        /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
-        dirige es un acceso valido y que no lo halla recorrido antes*/
+        // Esta variable controla para que no se devuelva
         boolean seguir = true;
         if (nodo.getAnterior()[0] == x && nodo.getAnterior()[1] == y && nodo.isEvitar())
         {

@@ -29,7 +29,7 @@ public class PreferenteProfundidad extends Busqueda
     }
 
     /*Metodo encargado de realizar la busqueda, esta comienza y no para hasta que
-    * encuentre la meta o la pila de prioridad quede vacia, que en este caso,
+    * encuentre la meta o la pila quede vacia, que en este caso,
     * no se encontraria la meta*/
     public void busqueda()
     {
@@ -72,7 +72,7 @@ public class PreferenteProfundidad extends Busqueda
                 System.out.println("-----------------------------------------META3");
             }
             
-            if (!isAquaman(nodo) && !fin) //Se comprueba que el robot esta cargado para poder seguir expandiendo
+            if (!isAquaman(nodo) && !fin) //Se comprueba que no sea un nodo aquaman
             { 
                 expandir(nodo, orden[3]);
                 expandir(nodo, orden[2]);
@@ -88,7 +88,7 @@ public class PreferenteProfundidad extends Busqueda
         setFactorRamificacion(calcularFactorRamificacion(getProfundidad(), getNodosCreados()));  
     }
 
-    //Metodo encargado de expandir un nodo en una operador determinada
+    //Metodo encargado de expandir un nodo en un operador determinado
     public void expandir(Nodo nodo, int operador)
     {
         int x = 0;
@@ -122,8 +122,7 @@ public class PreferenteProfundidad extends Busqueda
                 break;
         }
         
-        /*Esta condicion comprueba que el nodo este cargado, que al lugar que se
-        dirige es un acceso valido y que no lo halla recorrido antes*/
+        // variable para evitar devolverse o evitar ciclos
         boolean seguir = true;
         // evitar devolverse
 //        if (nodo.anterior[0] == x && nodo.anterior[1] == y && nodo.evitar)
@@ -180,7 +179,7 @@ public class PreferenteProfundidad extends Busqueda
             
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() || bonus));
             
-            //Se añade el nuevo nodo a la pila de prioridad
+            //Se añade el nuevo nodo a la pila
             if (bonus)
             {
                 pila.push(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true));
