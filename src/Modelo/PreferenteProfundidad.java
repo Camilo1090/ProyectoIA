@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***********************************************
+ * Camilo Ruiz Casanova - 1324486
+ * Andres Felipe Polanco - 1324539
+ * Universidad del Valle
+ **********************************************/
 package Modelo;
 
 import java.util.Stack;
@@ -178,7 +178,7 @@ public class PreferenteProfundidad extends Busqueda
                 }
             }
             
-            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() | bonus));
+            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() || bonus));
             
             //Se añade el nuevo nodo a la pila de prioridad
             if (bonus)

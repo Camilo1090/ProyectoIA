@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***********************************************
+ * Camilo Ruiz Casanova - 1324486
+ * Andres Felipe Polanco - 1324539
+ * Universidad del Valle
+ **********************************************/
 package Controlador;
 
 import Modelo.Asterisco;
@@ -65,6 +65,8 @@ public class Tablero_Eventos
     public void realizarBusqueda()
     {
         System.out.println(this.algoritmo + " " + this.heuristica);
+        solucion += "Algoritmo: " + this.algoritmo + "\n";
+        
         if (this.algoritmo.equals("A*") && this.heuristica == 1)
         {
             Asterisco ba1 = new Asterisco(
@@ -85,6 +87,7 @@ public class Tablero_Eventos
             //Se carga el camino en la vista para que el robot lo recorra
             tablero.cargarCamino(ba1.getNodoMeta().getCamino());
             
+            solucion += "Heuristica: " + this.heuristica + "\n";
             solucion += "Tiempo: " + time + " s\n";
             solucion += "Pasos Solucion:";
             String pasos = "";
@@ -96,7 +99,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }
@@ -121,6 +124,7 @@ public class Tablero_Eventos
             //Se carga el camino en la vista para que el robot lo recorra
             tablero.cargarCamino(ba1.getNodoMeta().getCamino());
             
+            solucion += "Heuristica: " + this.heuristica + "\n";
             solucion += "Tiempo: " + time + " s\n";
             solucion += "Pasos Solucion:";
             String pasos = "";
@@ -132,7 +136,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }
@@ -157,6 +161,7 @@ public class Tablero_Eventos
             //Se carga el camino en la vista para que el robot lo recorra
             tablero.cargarCamino(ba1.getNodoMeta().getCamino());
             
+            solucion += "Heuristica: " + this.heuristica + "\n";
             solucion += "Tiempo: " + time + " s\n";
             solucion += "Pasos Solucion:";
             String pasos = "";
@@ -168,7 +173,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }
@@ -193,6 +198,7 @@ public class Tablero_Eventos
             //Se carga el camino en la vista para que el robot lo recorra
             tablero.cargarCamino(ba1.getNodoMeta().getCamino());
             
+            solucion += "Heuristica: " + this.heuristica + "\n";
             solucion += "Tiempo: " + time + " s\n";
             solucion += "Pasos Solucion:";
             String pasos = "";
@@ -204,7 +210,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + ba1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }
@@ -235,7 +241,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + cu1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + cu1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + cu1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + cu1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + cu1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }
@@ -266,7 +272,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + pa1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + pa1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + pa1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + pa1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + pa1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }
@@ -298,7 +304,7 @@ public class Tablero_Eventos
             solucion += "Numero de Nodos Creados: " + pp1.getNodosCreados() + "\n";
             solucion += "Costo Total de la Solucion: " + pp1.getNodoMeta().getCosto() + "\n";
             solucion += "Factor de Ramificacion: " + pp1.getFactorRamificacion() + "\n";
-            solucion += "Profundidad del Arbol: " + pp1.getProfundidad() + "\n";
+            solucion += "Profundidad del Arbol: " + pp1.getProfundidad();
             
             this.tablero.taSolucion.setText(solucion);
         }

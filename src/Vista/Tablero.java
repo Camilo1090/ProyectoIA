@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***********************************************
+ * Camilo Ruiz Casanova - 1324486
+ * Andres Felipe Polanco - 1324539
+ * Universidad del Valle
+ **********************************************/
 package Vista;
 
 import java.util.ArrayList;
@@ -159,6 +159,7 @@ public class Tablero extends javax.swing.JFrame
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 10);
         jPanel1.add(jLabel1, gridBagConstraints);
 
+        taSolucion.setEditable(false);
         taSolucion.setColumns(20);
         taSolucion.setRows(5);
         jScrollPane1.setViewportView(taSolucion);

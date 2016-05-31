@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***********************************************
+ * Camilo Ruiz Casanova - 1324486
+ * Andres Felipe Polanco - 1324539
+ * Universidad del Valle
+ **********************************************/
 package Modelo;
 
 import java.util.Comparator;
@@ -39,12 +39,12 @@ public class Avara extends Busqueda
         if (tipoHeuristica == 1)
         {
             //Se añade el primer nodo a la cola de prioridad
-            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularManhattan(this.getIniX(), this.getIniY(), posMeta1)));
+            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica1(this.getIniX(), this.getIniY(), posMeta1)));
         }
         else
         {
             //Se añade el primer nodo a la cola de prioridad
-            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica(this.getIniX(), this.getIniY(), posMeta1)));
+            priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica2(this.getIniX(), this.getIniY(), posMeta1)));
         }
     }
 
@@ -198,37 +198,37 @@ public class Avara extends Busqueda
                 }
             }
             
-            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() | bonus));
+            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() || bonus));
             double heuristica = 0;
             
             if (tipoHeuristica == 1)
             {
                 if (!nodo.isMeta1())
                 {
-                    heuristica = calcularManhattan(x, y, posMeta1);
+                    heuristica = calcularHeuristica1(x, y, posMeta1);
                 }
                 else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
-                    heuristica = calcularManhattan(x, y, posMeta2);
+                    heuristica = calcularHeuristica1(x, y, posMeta2);
                 }
                 else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
-                    heuristica = calcularManhattan(x, y, posMeta3);
+                    heuristica = calcularHeuristica1(x, y, posMeta3);
                 }
             }
             else 
             {
                 if (!nodo.isMeta1())
                 {
-                    heuristica = calcularHeuristica(x, y, posMeta1);
+                    heuristica = calcularHeuristica2(x, y, posMeta1);
                 }
                 else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
-                    heuristica = calcularHeuristica(x, y, posMeta2);
+                    heuristica = calcularHeuristica2(x, y, posMeta2);
                 }
                 else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
-                    heuristica = calcularHeuristica(x, y, posMeta3);
+                    heuristica = calcularHeuristica2(x, y, posMeta3);
                 }
             }
             
@@ -245,9 +245,27 @@ public class Avara extends Busqueda
             setNodosCreados(getNodosCreados() + 1);
         }
     }
+    
+    // Heuristica distancia en linea recta * 0.5
+    public final double calcularHeuristica1(int posx, int posy, int[] meta)
+    {
+        double heuristica;
+        
+        heuristica = Math.sqrt((posx - meta[0])^2 + (posy - meta[1])^2) * (0.5);
+        
+        return heuristica;
+    }
+    
+    // Heuristica distancia en L * 0.5
+    public final double calcularHeuristica2(int posx, int posy, int[] meta)
+    {
+        double heuristica;
+        heuristica = calcularManhattan(posx, posy, meta) * (0.5);
+        return heuristica;
+    }
 
-    //Metodo encargado de retornar la distancia en L
-    public int calcularManhattan(int posx, int posy, int[] meta)
+    // Metodo encargado de retornar la distancia en L
+    public final int calcularManhattan(int posx, int posy, int[] meta)
     {
         int distanciaL;
         int distanciaX = Math.abs(posx - meta[0]);
@@ -255,14 +273,6 @@ public class Avara extends Busqueda
         distanciaL = distanciaX + distanciaY;
 
         return distanciaL;
-    }
-    
-    //Heuristica distancia en L * (7 - charge)
-    public double calcularHeuristica(int posx, int posy, int[] meta)
-    {
-        double heuristica;
-        heuristica = calcularManhattan(posx, posy, meta) * (0.5);
-        return heuristica;
     }
 
     //Subclase encargada de ordenar la cola de prioridad de acuerdo al costo
