@@ -172,7 +172,20 @@ public class CostoUniforme extends Busqueda
         @Override
         public int compare(Nodo a, Nodo b) 
         {
-            return (int) (a.getCosto() - b.getCosto());
+            double dif = a.getCosto() - b.getCosto();
+            
+            if (dif > 0)
+            {
+                return 1;
+            }
+            else if (dif < 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

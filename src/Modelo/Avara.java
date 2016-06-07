@@ -288,7 +288,20 @@ public class Avara extends Busqueda
         @Override
         public int compare(Nodo a, Nodo b) 
         {
-            return (int) (a.getHeuristica() - b.getHeuristica());
+            double dif = a.getHeuristica() - b.getHeuristica();
+            
+            if (dif > 0)
+            {
+                return 1;
+            }
+            else if (dif < 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
