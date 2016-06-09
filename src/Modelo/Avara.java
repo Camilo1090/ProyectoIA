@@ -91,13 +91,19 @@ public class Avara extends Busqueda
             }
             
             if (!isAquaman(nodo) && !fin) //Se comprueba que no sea un nodo aquaman
-            { 
+            {
+                //System.out.println("------------------NODO: (" + nodo.getX() + ", " + nodo.getY() + ") -- h = "+ nodo.getHeuristica());
                 expandir(nodo, 1);
                 expandir(nodo, 2);
                 expandir(nodo, 3);
                 expandir(nodo, 4);
                 setNodosExpandidos(getNodosExpandidos() + 1);
             }
+            
+//            if (c > 100)
+//            {
+//                break;
+//            }
             
             System.out.println(c);
             c++; 
@@ -239,6 +245,8 @@ public class Avara extends Busqueda
                 priorityQueue.offer(new Nodo(x, y, nodo, costo, true, heuristica));
             }
             
+            //System.out.println("----------------------Creado: ("+x+", "+y+") -- h = "+heuristica);
+            
             setNodosCreados(getNodosCreados() + 1);
         }
     }
@@ -247,8 +255,9 @@ public class Avara extends Busqueda
     public final double calcularHeuristica1(int posx, int posy, int[] meta)
     {
         double heuristica;
-        
-        heuristica = Math.sqrt((posx - meta[0])^2 + (posy - meta[1])^2) * (0.5);
+        double a = posx - meta[0];
+        double b = posy - meta[1];
+        heuristica = Math.sqrt((a*a) + (b*b)) * (0.5);
         
         return heuristica;
     }

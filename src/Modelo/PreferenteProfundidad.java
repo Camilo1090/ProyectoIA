@@ -73,7 +73,8 @@ public class PreferenteProfundidad extends Busqueda
             }
             
             if (!isAquaman(nodo) && !fin) //Se comprueba que no sea un nodo aquaman
-            { 
+            {
+                //System.out.println("------------------NODO: (" + nodo.getX() + ", " + nodo.getY() + ")");
                 expandir(nodo, orden[3]);
                 expandir(nodo, orden[2]);
                 expandir(nodo, orden[1]);
