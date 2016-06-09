@@ -149,7 +149,7 @@ public class Asterisco extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = isTurtle(nodo);
+            boolean bonus = isTurtle(nodo) && !nodo.isBonus();
             
             // determina si ya se ha usado la tortuga
             for (int[] tortuga : nodo.getTortugas()) 

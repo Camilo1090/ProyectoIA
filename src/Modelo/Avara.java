@@ -184,7 +184,7 @@ public class Avara extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = isTurtle(nodo);
+            boolean bonus = isTurtle(nodo) && !nodo.isBonus();
             
             for (int[] tortuga : nodo.getTortugas()) 
             {
