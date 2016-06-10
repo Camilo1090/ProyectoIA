@@ -82,6 +82,11 @@ public class PreferenteProfundidad extends Busqueda
                 setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
+//            if (c > 100)
+//            {
+//                break;
+//            }
+            
             System.out.println(c);
             c++;    
         }
