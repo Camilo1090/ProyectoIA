@@ -36,6 +36,7 @@ public class Tablero_Eventos
             (ActionEvent ae) -> 
             {
                 this.tablero.anterior();
+                actualizarDatos();
             }
         );
         
@@ -43,6 +44,7 @@ public class Tablero_Eventos
             (ActionEvent ae) -> 
             {
                 this.tablero.siguiente();
+                actualizarDatos();
             }
         );
         
@@ -50,6 +52,7 @@ public class Tablero_Eventos
             (ActionEvent ae) -> 
             {
                 this.tablero.reiniciar();
+                actualizarDatos();
             }
         );
         
@@ -308,6 +311,16 @@ public class Tablero_Eventos
             
             this.tablero.taSolucion.setText(solucion);
         }
+        
+        actualizarDatos();
+    }
+    
+    public void actualizarDatos()
+    {
+        int index = this.tablero.getMovimiento();
+        this.tablero.lPaso.setText(String.valueOf(index));
+        this.tablero.lPosicion.setText("(" + this.tablero.getCamino().get(index)[0] + ", " + this.tablero.getCamino().get(index)[1] + ")");
+        this.tablero.lTurnosBonus.setText(String.valueOf(this.tablero.getMapa().getTurnosBonus()));
     }
     
     public void cerrarVentana()
