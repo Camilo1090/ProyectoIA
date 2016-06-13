@@ -92,6 +92,38 @@ public class MenuPrincipal_Eventos
                                         this.menuPrincipal.cbCuarto.getSelectedIndex()+1};
                     //System.out.println(orden[0] + " " + orden[1] + " " + orden[2] + " " + orden[3]);
                     tableroEventos.setOrden(orden);
+                    
+                    boolean a = false;
+                    boolean b = false;
+                    boolean c = false;
+                    boolean d = false;
+                    
+                    for (int i : orden) 
+                    {
+                        switch (i) 
+                        {
+                            case 1:
+                                a = true;
+                                break;
+                            case 2:
+                                b = true;
+                                break;
+                            case 3:
+                                c = true;
+                                break;
+                            case 4:
+                                d = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    
+                    if (!(a && b && c && d))
+                    {
+                        JOptionPane.showMessageDialog(menuPrincipal, "Los operadores deben de ser distintos.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
                 else if (this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("A*") || this.menuPrincipal.cbAlgoritmos.getSelectedItem().equals("Avara"))
                 {
@@ -102,7 +134,7 @@ public class MenuPrincipal_Eventos
             }
             else
             {
-                
+                JOptionPane.showMessageDialog(menuPrincipal, "Error al cargar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

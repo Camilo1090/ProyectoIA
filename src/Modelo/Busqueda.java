@@ -120,6 +120,22 @@ public class Busqueda
         return isTurtle;
     }
     
+    //Metodo encargado de comprobar si es un nodo tortuga
+    public boolean isTurtle(int[] pos)
+    {
+        boolean isTurtle = false;
+        
+        if (posicionValida(pos[0], pos[1]))
+        {
+            if (getMatriz()[pos[0]][pos[1]] == 4)
+            {
+                isTurtle = true;
+            }
+        }
+        
+        return isTurtle;
+    }
+    
     //Metodo encargado de comprobar si es un nodo aquaman
     public boolean isAquaman(Nodo nodo)
     {
@@ -191,6 +207,8 @@ public class Busqueda
             case 7:
                 c = 1;
                 break;
+            case 8:
+                return Double.MAX_VALUE;
             default:
                 break;
         }

@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Mapa extends JPanel 
@@ -28,12 +29,14 @@ public class Mapa extends JPanel
     //Matriz que contiene los valores del mapa
     private int[][] positionsMap;
     private int[][] matrizOriginal;
+    private ArrayList<Estado> estados;
     //Arreglo con la posicion actual del robot
     private int[] robot;
     
     private boolean meta1;
     private boolean meta2;
     private boolean meta3;
+    private int turnosBonus;
     
     private int[] initPos;
     private int[] posMeta1;
@@ -62,6 +65,8 @@ public class Mapa extends JPanel
         meta1 = false;
         meta2 = false;
         meta3 = false;
+        turnosBonus = 0;
+        estados = new ArrayList();
         posMeta1 = new int[2];
         posMeta2 = new int[2];
         posMeta3 = new int[2];
@@ -261,6 +266,9 @@ public class Mapa extends JPanel
         Image icon;
         switch (numberIcon)
         {
+            case 0:
+                icon = imgRock;
+                break;
             case 1:
                 icon = imgRock;
                 break;
@@ -299,6 +307,11 @@ public class Mapa extends JPanel
         {
             System.arraycopy(matrizOriginal[i], 0, positionsMap[i], 0, matrizOriginal[i].length);
         }
+        
+        meta1 = false;
+        meta2 = false;
+        meta3 = false;
+        turnosBonus = 0;
     }
 
     //Metodo encargado de retornar loadMap el cual esta en true si el mapa a sido cargado exitosamente
@@ -314,51 +327,64 @@ public class Mapa extends JPanel
         return positionsMap;
     }
 
-    public void setRobot(int[] robot, int[] anterior, boolean sentido) 
+    public void setRobot(int[] robot, int indice, boolean sentido) 
     {
         this.robot = robot;
         // efectos visuales de cambios del mapa
-//        int n = positionsMap[anterior[0]][anterior[1]];
-//        
-//        if (sentido)
-//        {
-//            if (n == 4)
-//            {
-//                positionsMap[anterior[0]][anterior[1]] = 2;
-//            }
-//            else if (n == 7 && !meta1)
-//            {
-//                positionsMap[anterior[0]][anterior[1]] = 2;
-//                meta1 = true;
-//            }
-//            else if (n == 6 && meta1 && !meta2)
-//            {
-//                positionsMap[anterior[0]][anterior[1]] = 2;
-//                meta2 = true;
-//            }
-//            else if (n == 5 && meta1 && meta2 && !meta3)
-//            {
-//                positionsMap[anterior[0]][anterior[1]] = 2;
-//                meta3 = true;
-//            }
-//        }
-//        else if (!sentido)
-//        {
-//            positionsMap[anterior[0]][anterior[1]] = matrizOriginal[anterior[0]][anterior[1]];
-//            
-//            if (n == 5 && meta1 && meta2 && meta3)
-//            {
-//                meta3 = false;
-//            }
-//            else if (n == 6 && meta1 && meta2)
-//            {
-//                meta2 = false;
-//            }
-//            else if (n == 7 && meta1)
-//            {
-//                meta1 = false;
-//            }
-//        }
+        int n = positionsMap[robot[0]][robot[1]];
+        
+        if (sentido)
+        {
+            if (turnosBonus > 0)
+            {
+                turnosBonus--;
+            }
+            
+            if (n == 4 && turnosBonus == 0 && estados.get(indice - 1).turnosBonus == 0)
+            {
+                positionsMap[robot[0]][robot[1]] = 2;
+                turnosBonus = 4;
+            }
+            else if (n == 7 && !meta1)
+            {
+                positionsMap[robot[0]][robot[1]] = 2;
+                meta1 = true;
+            }
+            else if (n == 6 && meta1 && !meta2)
+            {
+                positionsMap[robot[0]][robot[1]] = 2;
+                meta2 = true;
+            }
+            else if (n == 5 && meta1 && meta2 && !meta3)
+            {
+                positionsMap[robot[0]][robot[1]] = 2;
+                meta3 = true;
+            }
+            
+            if (indice > (estados.size()-1))
+            {
+                int[][] matriz = new int[positionsMap.length][positionsMap.length];
+
+                for (int i = 0; i < positionsMap.length; i++) 
+                {
+                    System.arraycopy(positionsMap[i], 0, matriz[i], 0, matriz[i].length);
+                }
+
+                Estado estado = new Estado(matriz, meta1, meta2, meta3, turnosBonus);
+                estados.add(estado);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < positionsMap.length; i++) 
+            {
+                System.arraycopy(estados.get(indice).matriz[i], 0, positionsMap[i], 0, positionsMap[i].length);
+            }
+            meta1 = estados.get(indice).meta1;
+            meta2 = estados.get(indice).meta2;
+            meta3 = estados.get(indice).meta3;
+            turnosBonus = estados.get(indice).turnosBonus;
+        }
     }
 
     public int[] getInitPos() {
@@ -391,5 +417,31 @@ public class Mapa extends JPanel
 
     public void setPosMeta3(int[] posMeta3) {
         this.posMeta3 = posMeta3;
+    }
+
+    public int getTurnosBonus() {
+        return turnosBonus;
+    }
+
+    public void setTurnosBonus(int turnosBonus) {
+        this.turnosBonus = turnosBonus;
+    }
+    
+    private class Estado
+    {
+        int[][] matriz;
+        boolean meta1;
+        boolean meta2;
+        boolean meta3;
+        int turnosBonus;
+
+        public Estado(int[][] matriz, boolean meta1, boolean meta2, boolean meta3, int turnosBonus) 
+        {
+            this.matriz = matriz;
+            this.meta1 = meta1;
+            this.meta2 = meta2;
+            this.meta3 = meta3;
+            this.turnosBonus = turnosBonus;
+        }
     }
 }

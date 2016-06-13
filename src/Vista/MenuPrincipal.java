@@ -134,7 +134,7 @@ public class MenuPrincipal extends javax.swing.JFrame
         jPanel1.add(jLabel4, gridBagConstraints);
 
         cbHeuristica.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
-        cbHeuristica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        cbHeuristica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
         cbHeuristica.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
