@@ -340,7 +340,7 @@ public class Mapa extends JPanel
                 turnosBonus--;
             }
             
-            if (n == 4 && turnosBonus == 0)
+            if (n == 4 && turnosBonus == 0 && estados.get(indice - 1).turnosBonus == 0)
             {
                 positionsMap[robot[0]][robot[1]] = 2;
                 turnosBonus = 4;

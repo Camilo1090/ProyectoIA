@@ -61,7 +61,7 @@ public class Asterisco extends Busqueda
             Nodo nodo = getPriorityQueue().poll(); //Saca y remueve el nodo que se va a expandir
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
-
+            //System.out.println("-------------H: " + nodo.getHeuristica());
             if (isGoal1(nodo) && !nodo.isMeta1())
             {
                 //nodoMeta = nodo;
@@ -149,19 +149,20 @@ public class Asterisco extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = isTurtle(nodo) && !nodo.isBonus();
+            boolean bonus = nodo.isBonus();
+            boolean turtle = isTurtle(new int[]{x, y}) && !bonus;
             
             // determina si ya se ha usado la tortuga
             for (int[] tortuga : nodo.getTortugas()) 
             {
-                if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
+                if (tortuga[0] == x && tortuga[1] == y)
                 {
-                    bonus = false;
+                    turtle = false;
                     break;
                 }
             }
             
-            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() || bonus));
+            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), bonus);
             double heuristica = 0;
             
             if (getTipoHeuristica() == 1)
@@ -179,7 +180,7 @@ public class Asterisco extends Busqueda
                     heuristica = calcularHeuristica1(x, y, getPosMeta3());
                 }
             }
-            else 
+            else if (getTipoHeuristica() == 2)
             {
                 if (!nodo.isMeta1())
                 {
@@ -194,11 +195,26 @@ public class Asterisco extends Busqueda
                     heuristica = calcularHeuristica2(x, y, getPosMeta3());
                 }
             }
+            else
+            {
+                if (!nodo.isMeta1())
+                {
+                    heuristica = calcularHeuristica3(x, y, 1);
+                }
+                else if (nodo.isMeta1() && !nodo.isMeta2())
+                {
+                    heuristica = calcularHeuristica3(x, y, 2);
+                }
+                else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
+                {
+                    heuristica = calcularHeuristica3(x, y, 3);
+                }
+            }
             
             //Se añade el nuevo nodo a la cola de prioridad
-            if (bonus)
+            if (turtle)
             {
-                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
+                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{x, y}, true, heuristica));
             }
             else
             {
@@ -224,16 +240,39 @@ public class Asterisco extends Busqueda
     public final double calcularHeuristica2(int posx, int posy, int[] meta)
     {
         double heuristica;
-        heuristica = calcularManhattan(posx, posy, meta) * (0.5);
+        heuristica = calcularManhattan(new int[]{posx, posy}, meta) * (0.5);
+        return heuristica;
+    }
+    
+    public final double calcularHeuristica3(int posx, int posy, int meta)
+    {
+        double heuristica;
+        
+        switch (meta) 
+        {
+            case 1:
+                heuristica = (calcularManhattan(new int[]{posx, posy}, getPosMeta1()) * (0.5)) + 
+                        (calcularManhattan(getPosMeta1(), getPosMeta2()) * (0.5)) + 
+                        (calcularManhattan(getPosMeta2(), getPosMeta3()) * (0.5));
+                break;
+            case 2:
+                heuristica = (calcularManhattan(new int[]{posx, posy}, getPosMeta2()) * (0.5)) + 
+                        (calcularManhattan(getPosMeta2(), getPosMeta3()) * (0.5));
+                break;
+            default:
+                heuristica = calcularManhattan(new int[]{posx, posy}, getPosMeta3()) * (0.5);
+                break;
+        }
+        
         return heuristica;
     }
 
     // Metodo encargado de retornar la distancia en L
-    public final int calcularManhattan(int posx, int posy, int[] meta)
+    public final int calcularManhattan(int[] pos, int[] meta)
     {
         int distanciaL;
-        int distanciaX = Math.abs(posx - meta[0]);
-        int distanciaY = Math.abs(posy - meta[1]);        
+        int distanciaX = Math.abs(pos[0] - meta[0]);
+        int distanciaY = Math.abs(pos[1] - meta[1]);        
         distanciaL = distanciaX + distanciaY;
 
         return distanciaL;

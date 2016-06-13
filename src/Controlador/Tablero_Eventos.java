@@ -143,6 +143,43 @@ public class Tablero_Eventos
             
             this.tablero.taSolucion.setText(solucion);
         }
+        else if (this.algoritmo.equals("A*") && this.heuristica == 3)
+        {
+            //Se busca el inicio y el fin de la buqueda
+            Asterisco ba1 = new Asterisco(
+                    tablero.getMapa().getPositionsMap(),
+                    tablero.getMapa().getInitPos()[0],
+                    tablero.getMapa().getInitPos()[1],
+                    tablero.getMapa().getPosMeta1(),
+                    tablero.getMapa().getPosMeta2(),
+                    tablero.getMapa().getPosMeta3(),
+                    3 //Indica que es la heuristica 3
+            );
+            
+            long t = System.currentTimeMillis();
+            ba1.busqueda(); //Se realiza la busqueda
+            t = System.currentTimeMillis() - t;
+            double time = t/1000.0;
+            
+            //Se carga el camino en la vista para que el robot lo recorra
+            tablero.cargarCamino(ba1.getNodoMeta().getCamino());
+            
+            solucion += "Heuristica: " + this.heuristica + "\n";
+            solucion += "Tiempo: " + time + " s\n";
+            solucion += "Pasos Solucion:";
+            String pasos = "";
+            for (int[] pos : ba1.getNodoMeta().getCamino()) {
+                pasos += " (" + pos[0] + ", " + pos[1] + ") -->";
+            }
+            solucion += pasos.substring(0, pasos.length() - 4);
+            solucion += "\nNumero de Nodos Expandidos: " + ba1.getNodosExpandidos() + "\n";
+            solucion += "Numero de Nodos Creados: " + ba1.getNodosCreados() + "\n";
+            solucion += "Costo Total de la Solucion: " + ba1.getNodoMeta().getCosto() + "\n";
+            solucion += "Factor de Ramificacion: " + ba1.getFactorRamificacion() + "\n";
+            solucion += "Profundidad del Arbol: " + ba1.getProfundidad();
+            
+            this.tablero.taSolucion.setText(solucion);
+        }
         else if (this.algoritmo.equals("Avara") && this.heuristica == 1)
         {
             //Se busca el inicio y el fin de la buqueda
