@@ -61,7 +61,6 @@ public class Asterisco extends Busqueda
             Nodo nodo = getPriorityQueue().poll(); //Saca y remueve el nodo que se va a expandir
             //Se usa para hallar cual es la maxima profundidad
             actualizarProfundidad(nodo.getCamino().size() - 1); //Se le resta un 1 de el nodo raiz
-            //System.out.println("-------------H: " + nodo.getHeuristica());
             if (isGoal1(nodo) && !nodo.isMeta1())
             {
                 //nodoMeta = nodo;
@@ -147,10 +146,11 @@ public class Asterisco extends Busqueda
             seguir = false;
         }
         
+        // aqui se comprueba que el nodo a crearse sea valido
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = (nodo.getTurnosBonus() - 1) > 0;
-            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0);
+            boolean bonus = (nodo.getTurnosBonus() - 1) > 0; // si lleva bonus de una tortuga anterior
+            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0); // si esta en una tortuga y se puede coger su bonus
             
             // determina si ya se ha usado la tortuga
             if (turtle)
@@ -168,6 +168,8 @@ public class Asterisco extends Busqueda
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             double heuristica = 0;
             
+            // tipo de heuristica a usar
+            // dependiendo de que meta se busque se calcula una heuristica
             if (getTipoHeuristica() == 1)
             {
                 if (!nodo.isMeta1())
@@ -215,6 +217,7 @@ public class Asterisco extends Busqueda
             }
             
             //Se añade el nuevo nodo a la cola de prioridad
+            //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {
                 getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
@@ -224,7 +227,7 @@ public class Asterisco extends Busqueda
                 getPriorityQueue().offer(new Nodo(x, y, nodo, costo, true, heuristica));
             }
             
-            setNodosCreados(getNodosCreados() + 1);
+            setNodosCreados(getNodosCreados() + 1); // se aumenta la cantidad de nodos creados
         }
     }
     
@@ -247,6 +250,7 @@ public class Asterisco extends Busqueda
         return heuristica;
     }
     
+    // Heuristica basada en las 3 metas
     public final double calcularHeuristica3(int posx, int posy, int meta)
     {
         double heuristica;

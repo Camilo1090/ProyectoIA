@@ -133,12 +133,13 @@ public class Tablero extends javax.swing.JFrame
         bCerrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        lPaso = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lPosicion = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lTurnosBonus = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        lPaso = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Proyecto IA - Buscando a Todos");
@@ -245,13 +246,49 @@ public class Tablero extends javax.swing.JFrame
 
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
+        jLabel5.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel5.setText("Posicion Actual:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
+        jPanel5.add(jLabel5, gridBagConstraints);
+
+        lPosicion.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 10);
+        jPanel5.add(lPosicion, gridBagConstraints);
+
+        jLabel7.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel7.setText("Turnos Bonus:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
+        jPanel5.add(jLabel7, gridBagConstraints);
+
+        lTurnosBonus.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 10);
+        jPanel5.add(lTurnosBonus, gridBagConstraints);
+
+        jPanel6.setLayout(new java.awt.GridBagLayout());
+
         lPaso.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 10);
-        jPanel5.add(lPaso, gridBagConstraints);
+        jPanel6.add(lPaso, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel3.setText("Paso N°:");
@@ -260,41 +297,15 @@ public class Tablero extends javax.swing.JFrame
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 10);
-        jPanel5.add(jLabel3, gridBagConstraints);
+        jPanel6.add(jLabel3, gridBagConstraints);
 
-        jLabel5.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
-        jLabel5.setText("Posicion Actual:");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
-        jPanel5.add(jLabel5, gridBagConstraints);
-
-        lPosicion.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 10);
-        jPanel5.add(lPosicion, gridBagConstraints);
-
-        jLabel7.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
-        jLabel7.setText("Turnos Bonus:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 10);
-        jPanel5.add(jLabel7, gridBagConstraints);
-
-        lTurnosBonus.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 10);
-        jPanel5.add(lTurnosBonus, gridBagConstraints);
+        jPanel5.add(jPanel6, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -329,6 +340,7 @@ public class Tablero extends javax.swing.JFrame
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel lPaso;
     public javax.swing.JLabel lPosicion;

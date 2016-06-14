@@ -100,11 +100,6 @@ public class Avara extends Busqueda
                 setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
-//            if (c > 100)
-//            {
-//                break;
-//            }
-            
             System.out.println(c);
             c++; 
         }
@@ -154,6 +149,9 @@ public class Avara extends Busqueda
 //            seguir = false;
 //        }
         // evitar ciclos
+        // el nodo contiene las posiciones de su rama
+        // se verifica que la siguiente posicion no se encuentre entre dichas posiciones
+        // esto se realiza por intervalos segun que metas se hayan encontrado
         if (nodo.isEvitar() && !nodo.isMeta1())
         {
             for (int[] pos : nodo.getCamino())
@@ -190,8 +188,8 @@ public class Avara extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = (nodo.getTurnosBonus() - 1) > 0;
-            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0);
+            boolean bonus = (nodo.getTurnosBonus() - 1) > 0; // si lleva bonus de una tortuga anterior
+            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0); // si esta en una tortuga y se puede coger su bonus
             
             // determina si ya se ha usado la tortuga
             if (turtle)
@@ -209,50 +207,66 @@ public class Avara extends Busqueda
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             double heuristica = 0;
             
-            if (tipoHeuristica == 1)
+            // tipo de heuristica a usar
+            // dependiendo de que meta se busque se calcula una heuristica
+            if (getTipoHeuristica() == 1)
             {
                 if (!nodo.isMeta1())
                 {
-                    heuristica = calcularHeuristica1(x, y, posMeta1);
+                    heuristica = calcularHeuristica1(x, y, getPosMeta1());
                 }
                 else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
-                    heuristica = calcularHeuristica1(x, y, posMeta2);
+                    heuristica = calcularHeuristica1(x, y, getPosMeta2());
                 }
                 else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
-                    heuristica = calcularHeuristica1(x, y, posMeta3);
+                    heuristica = calcularHeuristica1(x, y, getPosMeta3());
                 }
             }
-            else 
+            else if (getTipoHeuristica() == 2)
             {
                 if (!nodo.isMeta1())
                 {
-                    heuristica = calcularHeuristica2(x, y, posMeta1);
+                    heuristica = calcularHeuristica2(x, y, getPosMeta1());
                 }
                 else if (nodo.isMeta1() && !nodo.isMeta2())
                 {
-                    heuristica = calcularHeuristica2(x, y, posMeta2);
+                    heuristica = calcularHeuristica2(x, y, getPosMeta2());
                 }
                 else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
                 {
-                    heuristica = calcularHeuristica2(x, y, posMeta3);
+                    heuristica = calcularHeuristica2(x, y, getPosMeta3());
+                }
+            }
+            else
+            {
+                if (!nodo.isMeta1())
+                {
+                    heuristica = calcularHeuristica3(x, y, 1);
+                }
+                else if (nodo.isMeta1() && !nodo.isMeta2())
+                {
+                    heuristica = calcularHeuristica3(x, y, 2);
+                }
+                else if (nodo.isMeta1() && nodo.isMeta2() && !nodo.isMeta3())
+                {
+                    heuristica = calcularHeuristica3(x, y, 3);
                 }
             }
             
             //Se añade el nuevo nodo a la cola de prioridad
+            //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {
-                priorityQueue.offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
+                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
             }
             else
             {
-                priorityQueue.offer(new Nodo(x, y, nodo, costo, true, heuristica));
+                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, true, heuristica));
             }
             
-            //System.out.println("----------------------Creado: ("+x+", "+y+") -- h = "+heuristica);
-            
-            setNodosCreados(getNodosCreados() + 1);
+            setNodosCreados(getNodosCreados() + 1); // se aumenta la cantidad de nodos creados
         }
     }
     
@@ -271,19 +285,78 @@ public class Avara extends Busqueda
     public final double calcularHeuristica2(int posx, int posy, int[] meta)
     {
         double heuristica;
-        heuristica = calcularManhattan(posx, posy, meta) * (0.5);
+        heuristica = calcularManhattan(new int[]{posx, posy}, meta) * (0.5);
+        return heuristica;
+    }
+    
+    // Heuristica basada en las 3 metas
+    public final double calcularHeuristica3(int posx, int posy, int meta)
+    {
+        double heuristica;
+        
+        switch (meta) 
+        {
+            case 1:
+                heuristica = (calcularManhattan(new int[]{posx, posy}, getPosMeta1()) * (0.5)) + 
+                        (calcularManhattan(getPosMeta1(), getPosMeta2()) * (0.5)) + 
+                        (calcularManhattan(getPosMeta2(), getPosMeta3()) * (0.5));
+                break;
+            case 2:
+                heuristica = (calcularManhattan(new int[]{posx, posy}, getPosMeta2()) * (0.5)) + 
+                        (calcularManhattan(getPosMeta2(), getPosMeta3()) * (0.5));
+                break;
+            default:
+                heuristica = calcularManhattan(new int[]{posx, posy}, getPosMeta3()) * (0.5);
+                break;
+        }
+        
         return heuristica;
     }
 
     // Metodo encargado de retornar la distancia en L
-    public final int calcularManhattan(int posx, int posy, int[] meta)
+    public final int calcularManhattan(int[] pos, int[] meta)
     {
         int distanciaL;
-        int distanciaX = Math.abs(posx - meta[0]);
-        int distanciaY = Math.abs(posy - meta[1]);        
+        int distanciaX = Math.abs(pos[0] - meta[0]);
+        int distanciaY = Math.abs(pos[1] - meta[1]);        
         distanciaL = distanciaX + distanciaY;
 
         return distanciaL;
+    }
+    
+    /**
+     * @return the priorityQueue
+     */
+    public PriorityQueue<Nodo> getPriorityQueue() {
+        return priorityQueue;
+    }
+
+    /**
+     * @return the tipoHeuristica
+     */
+    public int getTipoHeuristica() {
+        return tipoHeuristica;
+    }
+
+    /**
+     * @return the posMeta1
+     */
+    public int[] getPosMeta1() {
+        return posMeta1;
+    }
+
+    /**
+     * @return the posMeta2
+     */
+    public int[] getPosMeta2() {
+        return posMeta2;
+    }
+
+    /**
+     * @return the posMeta3
+     */
+    public int[] getPosMeta3() {
+        return posMeta3;
     }
 
     //Subclase encargada de ordenar la cola de prioridad de acuerdo al costo

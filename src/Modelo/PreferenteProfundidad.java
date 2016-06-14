@@ -82,11 +82,6 @@ public class PreferenteProfundidad extends Busqueda
                 setNodosExpandidos(getNodosExpandidos() + 1);
             }
             
-//            if (c > 100)
-//            {
-//                break;
-//            }
-            
             System.out.println(c);
             c++;    
         }
@@ -136,6 +131,9 @@ public class PreferenteProfundidad extends Busqueda
 //            seguir = false;
 //        }
         // evitar ciclos
+        // el nodo contiene las posiciones de su rama
+        // se verifica que la siguiente posicion no se encuentre entre dichas posiciones
+        // esto se realiza por intervalos segun que metas se hayan encontrado
         if (nodo.isEvitar() && !nodo.isMeta1())
         {
             for (int[] pos : nodo.getCamino())
@@ -172,8 +170,8 @@ public class PreferenteProfundidad extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = (nodo.getTurnosBonus() - 1) > 0;
-            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0);
+            boolean bonus = (nodo.getTurnosBonus() - 1) > 0; // si lleva bonus de una tortuga anterior
+            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0); // si esta en una tortuga y se puede coger su bonus
             
             // determina si ya se ha usado la tortuga
             if (turtle)
@@ -191,6 +189,7 @@ public class PreferenteProfundidad extends Busqueda
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             
             //Se añade el nuevo nodo a la pila
+            //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {
                 pila.push(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true));
@@ -200,7 +199,7 @@ public class PreferenteProfundidad extends Busqueda
                 pila.push(new Nodo(x, y, nodo, costo, true));
             }
             
-            setNodosCreados(getNodosCreados() + 1);
+            setNodosCreados(getNodosCreados() + 1); // se aumenta la cantidad de nodos creados
         }
     }
 }
