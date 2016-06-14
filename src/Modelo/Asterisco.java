@@ -149,20 +149,23 @@ public class Asterisco extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = nodo.isBonus();
-            boolean turtle = isTurtle(new int[]{x, y}) && !bonus;
+            boolean bonus = (nodo.getTurnosBonus() - 1) > 0;
+            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0);
             
             // determina si ya se ha usado la tortuga
-            for (int[] tortuga : nodo.getTortugas()) 
+            if (turtle)
             {
-                if (tortuga[0] == x && tortuga[1] == y)
+                for (int[] tortuga : nodo.getTortugas()) 
                 {
-                    turtle = false;
-                    break;
+                    if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
+                    {
+                        turtle = false;
+                        break;
+                    }
                 }
             }
             
-            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), bonus);
+            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             double heuristica = 0;
             
             if (getTipoHeuristica() == 1)
@@ -214,7 +217,7 @@ public class Asterisco extends Busqueda
             //Se añade el nuevo nodo a la cola de prioridad
             if (turtle)
             {
-                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{x, y}, true, heuristica));
+                getPriorityQueue().offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
             }
             else
             {

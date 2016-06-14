@@ -190,18 +190,23 @@ public class Avara extends Busqueda
         
         if (posicionValida(x, y) && seguir)
         {            
-            boolean bonus = isTurtle(nodo) && !nodo.isBonus();
+            boolean bonus = (nodo.getTurnosBonus() - 1) > 0;
+            boolean turtle = isTurtle(nodo) && !(nodo.getTurnosBonus() > 0);
             
-            for (int[] tortuga : nodo.getTortugas()) 
+            // determina si ya se ha usado la tortuga
+            if (turtle)
             {
-                if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
+                for (int[] tortuga : nodo.getTortugas()) 
                 {
-                    bonus = false;
-                    break;
+                    if (tortuga[0] == nodo.getX() && tortuga[1] == nodo.getY())
+                    {
+                        turtle = false;
+                        break;
+                    }
                 }
             }
             
-            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (nodo.isBonus() || bonus));
+            double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             double heuristica = 0;
             
             if (tipoHeuristica == 1)
@@ -236,7 +241,7 @@ public class Avara extends Busqueda
             }
             
             //Se añade el nuevo nodo a la cola de prioridad
-            if (bonus)
+            if (turtle)
             {
                 priorityQueue.offer(new Nodo(x, y, nodo, costo, new int[]{nodo.getX(), nodo.getY()}, true, heuristica));
             }

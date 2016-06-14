@@ -76,7 +76,7 @@ public class Nodo
         this.costo = costo;
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
-        turnosBonus = 3;
+        turnosBonus = 4;
         this.evitar = evitar;
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
@@ -157,7 +157,7 @@ public class Nodo
         this.fn = this.costo + this.heuristica;
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
-        turnosBonus = 3;
+        turnosBonus = 4;
         this.evitar = evitar;
         /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
