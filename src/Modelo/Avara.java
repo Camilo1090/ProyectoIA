@@ -32,7 +32,7 @@ public class Avara extends Busqueda
         this.tipoHeuristica = tipoHeuristica;
         //Se inicializa la cola de prioridad con el formato de ordenamiento
         PQsort pqs = new PQsort();
-        priorityQueue = new PriorityQueue<>(pqs);
+        priorityQueue = new PriorityQueue(pqs);
         //Se agrega el primer nodo a la cola de prioridad que en este caso seria el inicio
         if (tipoHeuristica == 1)
         {

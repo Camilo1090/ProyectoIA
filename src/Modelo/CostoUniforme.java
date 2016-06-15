@@ -23,7 +23,7 @@ public class CostoUniforme extends Busqueda
         this.iniY = iniY;
         //Se inicializa la cola de prioridad con el formato de ordenamiento
         PQsort pqs = new PQsort();
-        priorityQueue = new PriorityQueue<>(pqs);
+        priorityQueue = new PriorityQueue(pqs);
         //Se agrega el primer nodo a la cola de prioridad que en este casi seria el inicio
         priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true));
     }
