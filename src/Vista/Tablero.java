@@ -1,6 +1,6 @@
 /***********************************************
  * Camilo Ruiz Casanova - 1324486
- * Andres Felipe Polanco - 1324539
+ * Andres Martinez Polanco - 1324539
  * Universidad del Valle
  **********************************************/
 package Vista;

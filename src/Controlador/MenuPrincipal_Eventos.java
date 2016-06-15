@@ -1,12 +1,13 @@
 /***********************************************
  * Camilo Ruiz Casanova - 1324486
- * Andres Felipe Polanco - 1324539
+ * Andres Martinez Polanco - 1324539
  * Universidad del Valle
  **********************************************/
 package Controlador;
 
 import Vista.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -29,24 +30,36 @@ public class MenuPrincipal_Eventos
         this.menuPrincipal = menuPrincipal;
         
         this.menuPrincipal.bArchivo.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                cargarArchivo();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    cargarArchivo();
+                }
             }
         );
         
         this.menuPrincipal.bEmpezar.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                empezar();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    empezar();
+                }
             }
         );
         
         this.menuPrincipal.cbAlgoritmos.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                activarHeuristicas();
-                activarOrden();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    activarHeuristicas();
+                    activarOrden();
+                }
             }
         );
     }

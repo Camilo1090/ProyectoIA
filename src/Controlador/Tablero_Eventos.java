@@ -1,6 +1,6 @@
 /***********************************************
  * Camilo Ruiz Casanova - 1324486
- * Andres Felipe Polanco - 1324539
+ * Andres Martinez Polanco - 1324539
  * Universidad del Valle
  **********************************************/
 package Controlador;
@@ -12,6 +12,7 @@ import Modelo.PreferenteAmplitud;
 import Modelo.PreferenteProfundidad;
 import Vista.Tablero;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -33,33 +34,49 @@ public class Tablero_Eventos
         this.orden = new int[4];
         
         this.tablero.bAnterior.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                this.tablero.anterior();
-                actualizarDatos();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    tablero.anterior();
+                    actualizarDatos();
+                }
             }
         );
         
         this.tablero.bSiguiente.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                this.tablero.siguiente();
-                actualizarDatos();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    tablero.siguiente();
+                    actualizarDatos();
+                }
             }
         );
         
         this.tablero.bReiniciar.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                this.tablero.reiniciar();
-                actualizarDatos();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    tablero.reiniciar();
+                    actualizarDatos();
+                }
             }
         );
         
         this.tablero.bCerrar.addActionListener(
-            (ActionEvent ae) -> 
+            new ActionListener()
             {
-                cerrarVentana();
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    cerrarVentana();
+                }
             }
         );
     }
