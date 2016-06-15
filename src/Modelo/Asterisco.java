@@ -35,15 +35,15 @@ public class Asterisco extends Busqueda
         //Se inicializa la cola de prioridad con el formato de ordenamiento
         PQsort pqs = new PQsort();
         priorityQueue = new PriorityQueue<>(pqs);
-        //Se añade el primer nodo a la cola de prioridad que en este caso seria el inicio
+        //Se agrega el primer nodo a la cola de prioridad que en este caso seria el inicio
         if (tipoHeuristica == 1)
         {
-            //Se añade el primer nodo a la cola de prioridad
+            //Se agrega el primer nodo a la cola de prioridad
             priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica1(this.getIniX(), this.getIniY(), posMeta1)));
         }
         else
         {
-            //Se añade el primer nodo a la cola de prioridad
+            //Se agrega el primer nodo a la cola de prioridad
             priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true, calcularHeuristica2(this.getIniX(), this.getIniY(), posMeta1)));
         }
     }
@@ -216,7 +216,7 @@ public class Asterisco extends Busqueda
                 }
             }
             
-            //Se añade el nuevo nodo a la cola de prioridad
+            //Se agrega el nuevo nodo a la cola de prioridad
             //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {

@@ -23,7 +23,7 @@ public class PreferenteAmplitud extends Busqueda
         this.iniY = iniY;
         
         cola = new LinkedList<>();
-        //Se añade el primer nodo a la cola que en este caso seria el inicio
+        //Se agrega el primer nodo a la cola que en este caso seria el inicio
         cola.offer(new Nodo(iniX, iniY, null, 0, true));
     }
 
@@ -147,7 +147,7 @@ public class PreferenteAmplitud extends Busqueda
             
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             
-            //Se añade el nuevo nodo a la cola
+            //Se agrega el nuevo nodo a la cola
             //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {

@@ -46,7 +46,7 @@ public class Mapa extends JPanel
     //Verifica si se ha cargado el mapa
     private boolean loadMap;
 
-    //Variable encargada de escalar el juego para que se tenga el tamaño correcto
+    //Variable encargada de escalar el juego para que se tenga el tamano correcto
     double factEscGrid;
     double factEscSquare;
     double factEscImage;

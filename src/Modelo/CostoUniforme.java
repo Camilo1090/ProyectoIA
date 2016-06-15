@@ -24,7 +24,7 @@ public class CostoUniforme extends Busqueda
         //Se inicializa la cola de prioridad con el formato de ordenamiento
         PQsort pqs = new PQsort();
         priorityQueue = new PriorityQueue<>(pqs);
-        //Se añade el primer nodo a la cola de prioridad que en este casi seria el inicio
+        //Se agrega el primer nodo a la cola de prioridad que en este casi seria el inicio
         priorityQueue.offer(new Nodo(iniX, iniY, null, 0, true));
     }
 
@@ -148,7 +148,7 @@ public class CostoUniforme extends Busqueda
             
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             
-            //Se añade el nuevo nodo a la cola de prioridad
+            //Se agrega el nuevo nodo a la cola de prioridad
             //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {

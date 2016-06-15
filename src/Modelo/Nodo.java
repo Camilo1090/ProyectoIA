@@ -39,7 +39,7 @@ public class Nodo
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
         this.evitar = evitar;
-        /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
+        /*Esta condicion se usa para agregar el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
         {
@@ -78,7 +78,7 @@ public class Nodo
         tortugas = new ArrayList<>();
         turnosBonus = 4;
         this.evitar = evitar;
-        /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
+        /*Esta condicion se usa para agregar el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
         {
@@ -118,7 +118,7 @@ public class Nodo
         camino = new ArrayList<>();
         tortugas = new ArrayList<>();
         this.evitar = evitar;
-        /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
+        /*Esta condicion se usa para agregar el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
         {
@@ -159,7 +159,7 @@ public class Nodo
         tortugas = new ArrayList<>();
         turnosBonus = 4;
         this.evitar = evitar;
-        /*Esta condicion se usa para añadir el camino del padre al camino del nuevo nodo creado
+        /*Esta condicion se usa para agregar el camino del padre al camino del nuevo nodo creado
         * si el padre es nulo entonces solo se agrega la posicion actual al camino*/
         if (padre != null)
         {

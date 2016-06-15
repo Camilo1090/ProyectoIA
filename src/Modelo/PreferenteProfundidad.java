@@ -24,7 +24,7 @@ public class PreferenteProfundidad extends Busqueda
         this.orden = orden;
         
         pila = new Stack<>();
-        //Se añade el primer nodo a la pila que en este caso seria el inicio
+        //Se agrega el primer nodo a la pila que en este caso seria el inicio
         pila.push(new Nodo(iniX, iniY, null, 0, true));
     }
 
@@ -188,7 +188,7 @@ public class PreferenteProfundidad extends Busqueda
             
             double costo = calcularCosto(x, y, nodo, nodo.getCosto(), (bonus || turtle));
             
-            //Se añade el nuevo nodo a la pila
+            //Se agrega el nuevo nodo a la pila
             //Si se usa una tortuga, se guarda para no usarla de nuevo
             if (turtle)
             {
